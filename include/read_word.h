@@ -4,7 +4,7 @@
 /**** Variables globales et fonction pour l'analyse du fichier de texte ****/
 
 #include <stdio.h>
-#define SEP " ,.?"    // Tous les separateurs prevus
+#define SEP " ,.?"    /* Tous les separateurs prevus */
 
 /* numeros courants de ligne et de colonne dans le fichier en cours
 d'analyse (variables globales mises a jour par la fonction next_word) */
