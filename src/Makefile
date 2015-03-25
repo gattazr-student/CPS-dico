@@ -10,18 +10,18 @@ CC=gcc
 CFLAGS=-g -Wall -pedantic -I../include
 LDFLAGS=-L../lib/libmacos64
 LIBRARIES=-ltokenize
-EXECS=dico
 
-SRCS_0=dico.c
-OBJS_0=${SRCS_0:.c=.o}
+SRCS=main.c
+OBJS=${SRCS:.c=.o}
+EXEC=main
 
 #-------------------------------------------------
 #                     LINKINGS
 #-------------------------------------------------
-all: $(EXECS)
+all: $(EXEC)
 
-dico: $(OBJS_0)
-	$(CC) $(CFLAGS) -o dico $(OBJS_0) $(LDFLAGS) $(LIBRARIES)
+$(EXEC): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS) $(LIBRARIES)
 
 #-------------------------------------------------
 #                   DEPENDENCIES
@@ -30,7 +30,10 @@ dico: $(OBJS_0)
 #-------------------------------------------------
 #                     CLEANING
 #-------------------------------------------------
-clean_dico:
-	rm -f dico $(OBJS_0)
+clean:
+	rm -f $(OBJS)
 
-clean: clean_dico
+mr_proper: clean
+	rm -f $(EXEC)
+
+.PHONY: mr_proper clean
