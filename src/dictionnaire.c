@@ -7,6 +7,71 @@
 
 #define TAILLE_LETTRE 5 /* COMENTAIRE : USE GLOBAL */
 
+/**
+ * make_dico
+ * Initialisation d'un dico vide
+ * @return dictionnaire_t*: pointeur sur un dictionnaire vide
+ */
+dictionnaire_t* make_dico(){
+	 dictionnaire_t* wDico;
+	 wDico = (dictionnaire_t*) malloc(sizeof(dictionnaire_t));
+	 wDico->pMot = NULL;
+	 wDico->pNext = NULL;
+	 return wDico;
+}
+
+/**
+ * compare_mot
+ * @param aWord : mot à comparer
+ * @param aMot : mot à comparer (convertis)
+ * @return int : 0 si mot égaux, val négative si aWord1 <lex aWord2,
+ * val positive si aWord1 >lex aWord2
+ */
+int compare_mots(char* aWord, mot_t* aMot){
+	int nb_lettre; /* COMMENTAIRE : USE GLOBAL */
+	int wLength;
+	uint8_t wChar2;
+	uint8_t wChar1;
+	lLettres_t *wCourant;
+	int wEmplacement;
+	int wI;
+
+
+
+	nb_lettre = sizeof(maillon_t)/5; /* COMMENTAIRE : USE GLOBAL */
+
+	wLength = strlen(aWord);
+	wEmplacement = 0;
+	wI = 0;
+	wCourant = aMot->pTeteMot;
+	wChar2 = get_charnum(&(wCourant->pMaillon), wEmplacement);
+	wChar1 = char_to_num(aWord[wI]);
+	while(wChar1 == wChar2){
+		if(wEmplacement > nb_lettre){
+			wEmplacement = 0;
+			wCourant = wCourant->pNext;
+		}else{
+			wEmplacement++;
+		}
+		wI++;
+		wChar2 = get_charnum(&(wCourant->pMaillon), wEmplacement);
+		wChar1 = char_to_num(aWord[wI]);
+	}
+
+	if(wI == wLength-1){
+		if(wChar2 == '\0'){
+			return 0;
+		}else{
+			return -1;
+		}
+	}
+	if(wChar2 == '\0'){
+		return 1;
+	}
+
+	return wChar1 - wChar2;
+}
+
 /*
  * make_mot
  * @param aWord :
@@ -15,7 +80,7 @@
  * @return mot_t* : nouveau mot contenant
  */
 mot_t* make_mot(char* aWord, int aLigne, int aColonne){
-	int wLenght;
+	int wLength;
 	mot_t* wMot;
 	lLettres_t* wLettresCourant;
 	lLettres_t* wNext;
@@ -32,20 +97,20 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 	wMot->pQueueListe = NULL;
 
 	/* allocation des maillons contenant les lettres du mot */
-	wMot->pTeteMot = malloc(sizeof(lLettres_t));
+	wMot->pTeteMot = (lLettres_t*) malloc(sizeof(lLettres_t));
 	(wMot->pTeteMot)->pNext = NULL;
 	wMot->pQueueMot = wMot->pTeteMot;
 
 	wI = 0;
 	wEmplacement = 0;
 	wLettresCourant = wMot->pTeteMot;
-	wLenght = strlen(aWord);
-	while(wI < wLenght){
+	wLength = strlen(aWord);
+	while(wI < wLength){
 		/* Remet wEmplacement à 0 et création d'un nouveau maillon */
 		if(wEmplacement > nb_lettre){ /* COMMENTAIRE : USE GLOBAL */
 			wEmplacement = 0;
 			/* Créé un maillon supplémentaire */
-			wNext = malloc(sizeof(lLettres_t));
+			wNext = (lLettres_t*) malloc(sizeof(lLettres_t));
 			wNext->pNext = NULL;
 			wLettresCourant->pNext = wNext;
 			wLettresCourant = wNext;
