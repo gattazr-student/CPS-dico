@@ -31,6 +31,6 @@ typedef struct mot{
 
 /* Dictionnaire */
 typedef struct dictionnaire{
-	mot_t pMot;
+	mot_t *pMot;
 	struct dictionnaire *pNext;
 } dictionnaire_t;
