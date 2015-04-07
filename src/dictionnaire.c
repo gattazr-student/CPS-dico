@@ -189,7 +189,8 @@ void liberer_dico (dictionnaire_t *tete){
 /**
  * afficher_liste_position
  * Affichage d'une liste de position
- * @param tete : tete de la liste lEmplacement_t à libérer
+ * @param tete : tete de la liste lEmplacement_t à afficher
+ * @ensure affichage : permet aussi de passer à la ligne et de gérer les espaces
  */
 void afficher_liste_positions (lEmplacement_t *tete){
 	lEmplacement_t *courant = tete;
@@ -202,6 +203,11 @@ void afficher_liste_positions (lEmplacement_t *tete){
 	printf("\n");
 }
 
+/**
+ * afficher_liste_lettres
+ * Affichage des lettres d'un mot avec gestion des maillons
+ * @param tete : tete de la liste des maillons 
+ */
 void afficher_liste_lettres (lLettres_t *tete){
 	lLettres_t *courant = tete;
 	maillon_t *maillon;
@@ -222,11 +228,21 @@ void afficher_liste_lettres (lLettres_t *tete){
 	}
 }
 
+/**
+ * afficher_mot
+ * Affichage d'un mot : ses lettres puis les positions
+ * @param mot : pointeur vers une structure de mot
+ */
 void afficher_mot (mot_t *mot){
 	afficher_liste_lettres(mot->pTeteMot);
 	afficher_liste_positions(mot->pTeteListe);
 }
 
+/**
+ * afficher_dico
+ * Affichage de tous les mots d'un dictionnaire
+ * @param : pointeur vers un dictionnaire
+ */
 void afficher_dico (dictionnaire_t *dico){
 	dictionnaire_t *courant = dico;
 	while(courant != NULL){
