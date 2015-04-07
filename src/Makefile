@@ -11,7 +11,7 @@ CFLAGS=-g -Wall -pedantic -I../include
 LDFLAGS=-L../lib/libmacos64
 LIBRARIES=-ltokenize
 
-SRCS=main.c maillon.c
+SRCS=main.c maillon.c dictionnaire.c
 OBJS=${SRCS:.c=.o}
 EXEC=main
 
