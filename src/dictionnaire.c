@@ -59,3 +59,32 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 
 	return wMot;
 }
+
+void liberer_dico (dictionnaire_t *tete){
+	dictionnaire_t *courant;
+	while(tete != NULL){
+		courant = tete;
+		tete = (*tete)->pNext;
+		liberer_positions(courant->pTeteListe);
+		liberer_lettres(courant->pTeteMot);
+		free(courant);
+	}
+}
+
+void liberer_positions (lEmplacement_t *tete){
+	lEmplacement_t *courant;
+	while(tete != NULL){
+		courant = tete;
+		tete = (*tete)->pNext;
+		free(courant);
+	}
+}
+
+void liberer_lettres (lLettres_t *tete){
+	lLettres_t *courant;
+	while(tete != NULL){
+		courant = tete;
+		tete = (*tete)->pNext;
+		free(courant);
+	}
+}
