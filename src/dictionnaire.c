@@ -5,8 +5,12 @@
 #include <dictionnaire.h>
 #include <maillon.h>
 
-/*
- * TODO: comments
+/**
+ * make_mot
+ * @param aWord :
+ * @param aLigne : Emplacement du mot (ligne)
+ * @param aColonne : Emplacement du mot (colonne)
+ * @return mot_t* : nouveau mot contenant
  */
 mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 	int wLenght;
@@ -61,6 +65,11 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 	return wMot;
 }
 
+/**
+ * liberer_positions
+ * Libération d'une liste de positions
+ * @param tete : tete de la liste lEmplacement_t à libérer
+ */
 void liberer_positions (lEmplacement_t *tete){
 	lEmplacement_t *courant;
 	while(tete != NULL){
@@ -70,6 +79,11 @@ void liberer_positions (lEmplacement_t *tete){
 	}
 }
 
+/**
+ * liberer_lettres
+ * Libération d'une listre de lettres
+ * @param tete : tete de la liste lLettres_t à libérer
+ */
 void liberer_lettres (lLettres_t *tete){
 	lLettres_t *courant;
 	while(tete != NULL){
@@ -79,12 +93,22 @@ void liberer_lettres (lLettres_t *tete){
 	}
 }
 
+/**
+ * liberer_mot
+ * Libération d'un mot
+ * @param mot : mot à libérer
+ */
 void liberer_mot (mot_t *mot){
 	liberer_positions(mot->pTeteListe);
 	liberer_lettres(mot->pTeteMot);
 	free(mot);
 }
 
+/**
+ * liberer_dico
+ * Libération d'un dictionnaire
+ * @param tete : tete du dictionnaire_t à libérer
+ */
 void liberer_dico (dictionnaire_t *tete){
 	dictionnaire_t *courant;
 	while(tete != NULL){
@@ -95,6 +119,11 @@ void liberer_dico (dictionnaire_t *tete){
 	}
 }
 
+/**
+ * afficher_liste_position
+ * Affichage d'une liste de position
+ * @param tete : tete de la liste lEmplacement_t à libérer
+ */
 void afficher_liste_position (lEmplacement_t *tete){
 	lEmplacement_t *courant = tete;
 	emplacement_t *lieu;
