@@ -14,12 +14,12 @@ Types définis :
 Fonctions :
 -----------
 
-- insertion_dictionnaire
-- print_dictionnaire[TRYING]
+- insertion_dictionnadonire
+- print_dictionnaire                                [NO TEST]
 
 - compare_mots 
-- make_mot -> création + allocation [DONE]
-- free d'une liste (récursif ?) [DONE]
-- char_to_num + num_to_char [DONE]
-- get_charnum & set_charnum [DONE]
-- print_mot -> print_lLettres + print_lPositions[TRYING]
+- make_mot -> création + allocation                 [DONE]
+- free d'une liste (récursif ?)                     [DONE]
+- char_to_num + num_to_char                         [DONE]
+- get_charnum & set_charnum                         [DONE]
+- print_mot -> print_lLettres + print_lPositions    [DONE]
