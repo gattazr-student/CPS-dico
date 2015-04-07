@@ -33,7 +33,7 @@ $(EXEC): $(OBJS)
 clean:
 	rm -f $(OBJS)
 
-mr_proper: clean
+mrproper: clean
 	rm -f $(EXEC)
 
-.PHONY: mr_proper clean
+.PHONY: mrproper clean
