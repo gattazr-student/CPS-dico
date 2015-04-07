@@ -5,6 +5,9 @@
 #include <dictionnaire.h>
 #include <maillon.h>
 
+#define TAILLE_LETTRE 5 /* COMENTAIRE : USE GLOBAL */
+
+
 /*
  * TODO: comments
  */
@@ -95,7 +98,7 @@ void liberer_dico (dictionnaire_t *tete){
 	}
 }
 
-void afficher_liste_position (lEmplacement_t *tete){
+void afficher_liste_positions (lEmplacement_t *tete){
 	lEmplacement_t *courant = tete;
 	emplacement_t *lieu;
 	while(courant != NULL){
@@ -104,4 +107,24 @@ void afficher_liste_position (lEmplacement_t *tete){
 		courant = courant->pNext;
 	}
 	printf("\n");
+}
+
+void afficher_liste_lettres (lLettres_t *tete){
+	lLettres_t *courant = tete;
+	maillon_t *maillon;
+	int position;
+	char l;
+	int nb_lettre = sizeof(maillon_t)/TAILLE_LETTRE; /* COMENTAIRE : USE GLOBAL */
+	while(courant != NULL){
+		maillon = &(courant->pMaillon);
+		position=0;
+		do{
+			l=num_to_char(get_charnum(maillon,position));
+			if(l != '\0'){
+				printf("%c", l);
+			}
+			position++;
+		}while((l != '\0') && (position <= nb_lettre));
+		courant = courant->pNext;
+	}
 }
