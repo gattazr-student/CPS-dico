@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <types.h>
 #include <dictionnaire.h>
@@ -60,22 +61,11 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 	return wMot;
 }
 
-void liberer_dico (dictionnaire_t *tete){
-	dictionnaire_t *courant;
-	while(tete != NULL){
-		courant = tete;
-		tete = (*tete)->pNext;
-		liberer_positions(courant->pTeteListe);
-		liberer_lettres(courant->pTeteMot);
-		free(courant);
-	}
-}
-
 void liberer_positions (lEmplacement_t *tete){
 	lEmplacement_t *courant;
 	while(tete != NULL){
 		courant = tete;
-		tete = (*tete)->pNext;
+		tete = tete->pNext;
 		free(courant);
 	}
 }
@@ -84,7 +74,34 @@ void liberer_lettres (lLettres_t *tete){
 	lLettres_t *courant;
 	while(tete != NULL){
 		courant = tete;
-		tete = (*tete)->pNext;
+		tete = tete->pNext;
 		free(courant);
 	}
+}
+
+void liberer_mot (mot_t *mot){
+	liberer_positions(mot->pTeteListe);
+	liberer_lettres(mot->pTeteMot);
+	free(mot);
+}
+
+void liberer_dico (dictionnaire_t *tete){
+	dictionnaire_t *courant;
+	while(tete != NULL){
+		courant = tete;
+		tete = tete->pNext;
+		liberer_mot(courant->pMot);
+		free(courant);
+	}
+}
+
+void afficher_liste_position (lEmplacement_t *tete){
+	lEmplacement_t *courant = tete;
+	emplacement_t *lieu;
+	while(courant != NULL){
+		lieu = &(courant->pPos);
+		printf(" (%i,%i)", lieu->pLigne, lieu->pColonne);
+		courant = courant->pNext;
+	}
+	printf("\n");
 }

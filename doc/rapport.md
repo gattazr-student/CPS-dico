@@ -15,7 +15,7 @@ Fonctions :
 -----------
 
 - insertion_dictionnaire
-- print_dictionnaire
+- print_dictionnaire[TRYING]
 
 - compare_mots 
 - make_mot -> création + allocation [DONE]
