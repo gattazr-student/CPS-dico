@@ -19,6 +19,7 @@ Fonctions :
 
 - compare_mots
 - make_mot -> création + allocation
+- free d'une liste (récursif ?)
 - char_to_num + num_to_char
 - get_charnum & set_charnum
 - print_mot -> print_lLettres + print_lPositions
