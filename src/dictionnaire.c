@@ -221,3 +221,16 @@ void afficher_liste_lettres (lLettres_t *tete){
 		courant = courant->pNext;
 	}
 }
+
+void afficher_mot (mot_t *mot){
+	afficher_liste_lettres(mot->pTeteMot);
+	afficher_liste_positions(mot->pTeteListe);
+}
+
+void afficher_dico (dictionnaire_t *dico){
+	dictionnaire_t *courant = dico;
+	while(courant != NULL){
+		afficher_mot(courant->pMot);
+		courant = courant->pNext;
+	}
+}

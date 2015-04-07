@@ -7,3 +7,5 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne);
 
 
 
+void afficher_dico (dictionnaire_t *dico);
+
