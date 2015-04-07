@@ -1,0 +1,61 @@
+#include <stdlib.h>
+#include <string.h>
+#include <types.h>
+#include <dictionnaire.h>
+#include <maillon.h>
+
+/*
+ * TODO: comments
+ */
+mot_t* make_mot(char* aWord, int aLigne, int aColonne){
+	int wLenght;
+	mot_t* wMot;
+	lLettres_t* wLettresCourant;
+	lLettres_t* wNext;
+	int wI, wEmplacement;
+	int nb_lettre; /* COMMENTAIRE : USE GLOBAL OR MAKE FUNCTION */
+
+	nb_lettre = sizeof(maillon_t)/5; /* COMMENTAIRE : USE GLOBAL */
+
+	/* allocation du mot */
+	wMot = (mot_t*) malloc(sizeof(mot_t));
+	wMot->pTeteMot = NULL;
+	wMot->pQueueMot = NULL;
+	wMot->pTeteListe = NULL;
+	wMot->pQueueListe = NULL;
+
+	/* allocation des maillons contenant les lettres du mot */
+	wMot->pTeteMot = malloc(sizeof(lLettres_t));
+	(wMot->pTeteMot)->pNext = NULL;
+	wMot->pQueueMot = wMot->pTeteMot;
+
+	wI = 0;
+	wEmplacement = 0;
+	wLettresCourant = wMot->pTeteMot;
+	wLenght = strlen(aWord);
+	while(wI < wLenght){
+		/* Remet wEmplacement à 0 et création d'un nouveau maillon */
+		if(wEmplacement > nb_lettre){ /* COMMENTAIRE : USE GLOBAL */
+			wEmplacement = 0;
+			/* Créé un maillon supplémentaire */
+			wNext = malloc(sizeof(lLettres_t));
+			wNext->pNext = NULL;
+			wLettresCourant->pNext = wNext;
+			wLettresCourant = wNext;
+			wMot->pQueueMot = wNext;
+		}
+		set_charnum(&(wLettresCourant->pMaillon), wEmplacement, char_to_num(aWord[wI]));
+		wI++;
+		wEmplacement++;
+	}
+
+	/* Allocation de la liste de position */
+	wMot->pTeteListe = malloc(sizeof(lEmplacement_t));
+	(wMot->pTeteListe)->pNext = NULL;
+	wMot->pQueueListe = wMot->pTeteListe;
+
+	(wMot->pTeteListe)->pPos.pLigne = aLigne;
+	(wMot->pTeteListe)->pPos.pColonne = aColonne;
+
+	return wMot;
+}
