@@ -2,7 +2,6 @@
 #define MAILLON_SRC
 #include <maillon.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 int NB_LETTRES_MAILLON = sizeof(maillon_t)*8/TAILLE_LETTRE;
 

@@ -3,6 +3,7 @@
 #include <maillon.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
  * compare_mot
@@ -92,7 +93,7 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 			wLettresCourant = wNext;
 			wMot->pQueueMot = wNext;
 		}
-		
+
 		set_charnum(&(wLettresCourant->pMaillon), wEmplacement, char_to_num(aWord[wI]));
 
 		wI++;

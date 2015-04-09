@@ -8,12 +8,30 @@
 #-------------------------------------------------
 CC=gcc
 CFLAGS=-g -Wall -pedantic -I../include
-LDFLAGS=-L../lib/libmacos64
+LDFLAGS=
 LIBRARIES=-ltokenize
 
 SRCS=main.c maillon.c mot.c dictionnaire.c
 OBJS=${SRCS:.c=.o}
 EXEC=main
+
+#-------------------------------------------------
+#            Adapt Makefile to target
+#-------------------------------------------------
+# Adaptation a Darwin / MacOS X
+ifeq ($(shell uname -sm), Darwin x86_64)
+LDFLAGS+= -L../lib/libmacos64
+endif
+
+# Adaptation a Linux64
+ifeq ($(shell uname -sm), Linux x86_64)
+LDFLAGS+=-L../lib/liblinux64
+endif
+
+ifeq ($(shell uname -sm), Darwin x86)
+LDFLAGS+=-L../lib/liblinux32
+endif
+
 
 #-------------------------------------------------
 #                     LINKINGS

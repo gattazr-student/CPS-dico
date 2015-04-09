@@ -1,5 +1,6 @@
 #include <types.h>
 #include <mot.h>
+#include <stdlib.h>
 
 /**
  * make_dico

@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdint.h>
 
 /* Emplacement d'un mot */
 typedef struct emplacement {
