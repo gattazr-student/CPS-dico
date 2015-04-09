@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <read_word.h>
 #include <types.h>
-#include <dictionnaire.h>
 #include <maillon.h>
+#include <mot.h>
+#include <dictionnaire.h>
+
 
 /*
  * TODO: comments
@@ -13,6 +15,7 @@ int main(int aArgc, char** aArgv){
 	char *wWord;
 	unsigned int wLine, wCols;
 	mot_t* wMot;
+
 
 	/* Ouverture du fichier en paramètre si il existe. utilisation de stdin sinon */
 	if(aArgc > 1){
@@ -34,7 +37,8 @@ int main(int aArgc, char** aArgv){
 		wMot = make_mot(wWord, wLine, wCols);
 
 		fprintf(stdout, "%s (%d,%d)\n", wWord, wLine, wCols);
-		fprintf(stderr, "%c\n", num_to_char(get_charnum(&((wMot->pTeteMot)->pMaillon),0)));
+		afficher_mot(wMot);
+		liberer_mot(wMot);
 	}
 
 	/* Ferme le fichier input si il ne s'agit pas de stdin */

@@ -11,7 +11,7 @@ CFLAGS=-g -Wall -pedantic -I../include
 LDFLAGS=-L../lib/libmacos64
 LIBRARIES=-ltokenize
 
-SRCS=main.c maillon.c dictionnaire.c
+SRCS=main.c maillon.c mot.c dictionnaire.c
 OBJS=${SRCS:.c=.o}
 EXEC=main
 
@@ -26,6 +26,10 @@ $(EXEC): $(OBJS)
 #-------------------------------------------------
 #                   DEPENDENCIES
 #-------------------------------------------------
+main.o: main.c ../include/types.h
+maillon.o: maillon.c ../include/maillon.h ../include/types.h
+mot.o: mot.c ../include/mot.h maillon.c ../include/types.h
+dictionnaire.o: dictionnaire.c ../include/dictionnaire.h ../include/mot.h ../include/types.h
 
 #-------------------------------------------------
 #                     CLEANING

@@ -1,20 +1,22 @@
-#include <stdlib.h>
 #include <types.h>
+#define MAILLON_SRC
+#include <maillon.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-#define TAILLE_LETTRE 5 /* COMENTAIRE : USE GLOBAL */
+int NB_LETTRES_MAILLON = sizeof(maillon_t)*8/TAILLE_LETTRE;
 
 /* @Invariant : 0<= num <= sizeof(maillon_t)/TAILLE_LETTRE */
 /*
  * TODO: comments
  */
 void set_charnum (maillon_t *maillon, int num, uint8_t l){
-	int nb_lettre = sizeof(maillon_t)/TAILLE_LETTRE; /* COMENTAIRE : USE GLOBAL */
-	maillon_t mask = 0x1F; /* COMENTAIRE : USE GLOBAL */
+	maillon_t mask = 0x1F; /* COMENTAIRE : MAKE A FUNCTION TO PRODUCE IT WITH NB_LETTRES_MAILLON */
 	maillon_t charnum = (maillon_t)l;
 
 	/* On décale le masque à la bonne place */
-	mask <<= (TAILLE_LETTRE * (nb_lettre - num)); /* COMENTAIRE : USE GLOBAL */
-	charnum = charnum << (TAILLE_LETTRE * (nb_lettre - num)); /* COMENTAIRE : USE GLOBAL */
+	mask <<= (TAILLE_LETTRE * (NB_LETTRES_MAILLON - num - 1));
+	charnum = charnum << (TAILLE_LETTRE * (NB_LETTRES_MAILLON - num - 1));
 	/* inversion du mask pour faire une initialisation avant l'écriture */
 	mask = ~mask;
 	*maillon = *maillon & mask;
@@ -25,16 +27,16 @@ void set_charnum (maillon_t *maillon, int num, uint8_t l){
  * TODO: comments
  */
 uint8_t get_charnum (maillon_t *maillon, int num){
-	int nb_lettre = sizeof(maillon_t)/TAILLE_LETTRE; /* COMENTAIRE : USE GLOBAL */
-	maillon_t mask = 0x1F; /* COMENTAIRE : USE GLOBAL */
+	maillon_t mask = 0x1F; /* COMENTAIRE : MAKE A FUNCTION TO PRODUCE IT WITH NB_LETTRES_MAILLON */
+	int depl;
 
-	mask <<= (TAILLE_LETTRE * (nb_lettre - num)); /* COMENTAIRE : USE GLOBAL */
+	depl = (TAILLE_LETTRE * (NB_LETTRES_MAILLON - num - 1));
+	mask <<= depl;
 	mask = *maillon & mask;
+
 	/* On décale le masque vers le bits de poids faibles pour le cast */
-	while(num!=nb_lettre){ /* COMENTAIRE : USE GLOBAL */
-		mask >>= nb_lettre; /* COMENTAIRE : USE GLOBAL */
-		num++;
-	}
+	mask >>= depl;
+
 	return (uint8_t)mask;
 }
 
