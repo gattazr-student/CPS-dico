@@ -39,6 +39,7 @@ int main(int aArgc, char** aArgv){
 		fprintf(stdout, "%s (%d,%d)\n", wWord, wLine, wCols);
 		afficher_mot(wMot);
 		liberer_mot(wMot);
+		free(wWord);
 	}
 
 	/* Ferme le fichier input si il ne s'agit pas de stdin */
