@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 /**
+ * TODO: comments
  * compare_mot
  * @param aWord : mot à comparer
  * @param aMot : mot à comparer (convertis)
@@ -40,19 +41,20 @@ int compare_mots(char* aWord, mot_t* aMot){
 
 	if(wI == wLength-1){
 		if(wChar2 == '\0'){
-			return 0;
+			return wChar1;
 		}else{
-			return -1;
+			return wChar2;
 		}
 	}
 	if(wChar2 == '\0'){
-		return 1;
+		return wChar1;
 	}
 
 	return wChar1 - wChar2;
 }
 
-/*
+/**
+ * TODO: comments
  * make_mot
  * @param aWord :
  * @param aLigne : Emplacement du mot (ligne)
@@ -105,18 +107,27 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 	(wMot->pTeteListe)->pNext = NULL;
 	wMot->pQueueListe = wMot->pTeteListe;
 
-	(wMot->pTeteListe)->pPos.pLigne = aLigne;
-	(wMot->pTeteListe)->pPos.pColonne = aColonne;
+	(wMot->pQueueListe)->pPos.pLigne = aLigne;
+	(wMot->pQueueListe)->pPos.pColonne = aColonne;
 
 	return wMot;
 }
 
 /**
- *TODO: comments
+ * TODO: comments
+ * update_mot
+ * @param aWord :
+ * @param aLigne : Emplacement du mot (ligne)
+ * @param aColonne : Emplacement du mot (colonne)
  */
 void update_mot(mot_t* aMot, int aLigne, int aColonne){
-	/* TODO: function */
-	return;
+
+	/* Allocation d'un nouvel element dans la liste de position */
+	(aMot->pQueueListe)->pNext = malloc(sizeof(lEmplacement_t));
+	aMot->pQueueListe = (aMot->pQueueListe)->pNext;
+
+	(aMot->pQueueListe)->pPos.pLigne = aLigne;
+	(aMot->pQueueListe)->pPos.pColonne = aColonne;
 }
 
 /**
