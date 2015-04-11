@@ -2,6 +2,7 @@
 #include <dictionnaire.h>
 #include <mot.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	/* je peux utiliser :
@@ -28,6 +29,8 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 		wMot = wDico_courant->pMot; /* on récupère le premier mot */
 		/* on fait cela pour savoir si l'on fait un ajout en tête du du dictionnaire */
 		wCompare = compare_mots(mot, wMot);
+	}else{
+		wCompare = 1;
 	}
 	if(wCompare > 0){ /* cas de l'ajout en tête */
 		wMot = make_mot(mot, nb_l, nb_c); /* wMot pointe vers le premier mot du dictionnaire */
@@ -107,6 +110,7 @@ void afficher_maillons_dico (dictionnaire_t *dico){
 	dictionnaire_t *courant = dico;
 	while(courant != NULL){
 		afficher_maillons(courant->pMot);
+		printf("\n");
 		courant = courant->pNext;
 	}
 }

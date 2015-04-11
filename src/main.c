@@ -32,7 +32,7 @@ int main(int aArgc, char** aArgv){
 
 	wLine = 0;
 	wCols = 0;
-	wDico = make_dico();
+	/* wDico = make_dico(); */
 
 	/* Traite les mots entrant dans stdin */
 	while(!feof(wInput)){
@@ -44,7 +44,7 @@ int main(int aArgc, char** aArgv){
 	do{
 
 		do{
-			wRepeat = 1;
+			wRepeat = 0;
 			printf("\tLecture finie, que voulez-vous faire ?\n");
 			printf("\t 1 - afficher le dictionnaire\n");
 			printf("\t 2 - afficher les maillons\n");
@@ -52,16 +52,18 @@ int main(int aArgc, char** aArgv){
 			fflush(stdin);
 			scanf("%c",&reponse);
 			if(reponse < '1' || reponse > '3' ){
-				wRepeat = 0;
+				wRepeat = 1;
 				printf("Choix incorrect\n\n");
 			}
 		}while( wRepeat );
 		switch(reponse){
 			case '1':
+				printf("Dictionnaire \n");
 				afficher_dico(wDico);
 			break;
 			case '2':
-				/* TODO: afficher_maillons de chaque mots du dico */
+				printf("Maillons \n");
+				afficher_maillons_dico(wDico);
 			break;
 		}
 	}while(reponse != '3');
