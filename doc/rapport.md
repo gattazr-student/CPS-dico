@@ -14,10 +14,16 @@ Types définis :
 Fonctions :
 -----------
 
-- insertion_dictionnadonire
+Ce qui manque :
+- insertion_dico
+- autre chose ?
+
+Ce qui n'est pas encore tester :
 - print_dictionnaire                                [NO TEST]
 
-- compare_mots 
+Ce qui marche :
+- compare_mots                                      [DONE]
+- make_dico                                         [DONE]
 - make_mot -> création + allocation                 [DONE]
 - free d'une liste (récursif ?)                     [DONE]
 - char_to_num + num_to_char                         [DONE]
