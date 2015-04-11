@@ -14,10 +14,7 @@ int main(int aArgc, char** aArgv){
 	FILE *wInput;
 	unsigned int wLine, wCols;
 	dictionnaire_t *wDico;
-	char reponse;
 	char* wWord;
-	int wRepeat;
-
 
 	/* Ouverture du fichier en paramètre si il existe. utilisation de stdin sinon */
 	if(aArgc > 1){
@@ -32,7 +29,6 @@ int main(int aArgc, char** aArgv){
 
 	wLine = 0;
 	wCols = 0;
-	/* wDico = make_dico(); */
 
 	/* Traite les mots entrant dans stdin */
 	while(!feof(wInput)){
@@ -41,34 +37,13 @@ int main(int aArgc, char** aArgv){
 		free(wWord);
 	}
 
-	do{
+	printf("\n\nDictionnaire :\n");
+	afficher_dico(wDico);
 
-		do{
-			wRepeat = 0;
-			printf("\tLecture finie, que voulez-vous faire ?\n");
-			printf("\t 1 - afficher le dictionnaire\n");
-			printf("\t 2 - afficher les maillons\n");
-			printf("\t 3 - quitter\n");
-			fflush(stdin);
-			scanf("%c",&reponse);
-			if(reponse < '1' || reponse > '3' ){
-				wRepeat = 1;
-				printf("Choix incorrect\n\n");
-			}
-		}while( wRepeat );
-		switch(reponse){
-			case '1':
-				printf("Dictionnaire \n");
-				afficher_dico(wDico);
-			break;
-			case '2':
-				printf("Maillons \n");
-				afficher_maillons_dico(wDico);
-			break;
-		}
-	}while(reponse != '3');
+	printf("\n\nMaillons :\n");
+	afficher_maillons_dico(wDico);
 
-
+	/* Libération de la mémoire qui a été alloué */
 	liberer_dico(wDico);
 
 	/* Ferme le fichier input si il ne s'agit pas de stdin */
