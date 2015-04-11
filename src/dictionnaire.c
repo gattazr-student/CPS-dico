@@ -2,6 +2,7 @@
 #include <dictionnaire.h>
 #include <mot.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 
 /**
@@ -14,7 +15,7 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	dictionnaire_t *wDico_courant;
 	dictionnaire_t *wDico_precedent;
 	mot_t *wMot;
-	int wCompare; /* on doit inserer en tête si jamais le dico est vide */
+	int wCompare; 
 
 	wDico_courant = *dico; /* on récupère le premier élement du dictionnaire */
 
@@ -22,7 +23,8 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 		wMot = wDico_courant->pMot; /* on récupère le premier mot */
 		/* on fait cela pour savoir si l'on fait un ajout en tête du dictionnaire */
 		wCompare = compare_mots(mot, wMot);
-	}else{
+/*afficher_mot(wMot);*/
+	}else{ /* on doit inserer en tête si jamais le dico est vide */
 		wCompare = -1;
 	}
 	if(wCompare < 0){ /* cas de l'ajout en tête, qu'il soit vide ou pas */
@@ -35,12 +37,13 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	}else{ /* on continue de cherche la place dans le dictionnaire */
 		wDico_precedent = wDico_courant;
 		wDico_courant = wDico_courant->pNext; /* on avance d'une position */
-
 		while(wDico_courant != NULL && wCompare > 0){
 			wMot = wDico_courant->pMot;
 			wCompare = compare_mots(mot, wMot);
-			wDico_precedent = wDico_courant; /* on garde en mémoire la cellule d'avant */
-			wDico_courant = wDico_courant->pNext; /* on avance d'une position */
+			if(wCompare > 0){ /* Si la comparaison rend un négatif c'est que  l'on à trouver la bonne place, pas besoin d'avancer d'un pas */
+				wDico_precedent = wDico_courant; /* on garde en mémoire la cellule d'avant */
+				wDico_courant = wDico_courant->pNext; /* on avance d'une position */
+			}
 		}
 		if(wCompare == 0){ /* on vient de trouver le mot donc on met à jour sa liste de positions */
 			update_mot(wMot, nb_l, nb_c);
