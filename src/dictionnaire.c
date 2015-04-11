@@ -110,7 +110,6 @@ void afficher_maillons_dico (dictionnaire_t *dico){
 	dictionnaire_t *courant = dico;
 	while(courant != NULL){
 		afficher_maillons(courant->pMot);
-		printf("\n");
 		courant = courant->pNext;
 	}
 }

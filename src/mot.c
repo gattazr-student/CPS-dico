@@ -167,7 +167,7 @@ void afficher_liste_lettres (lLettres_t *tete){
 				printf("%c", l);
 			}
 			position++;
-		}while((l != '\0') && (position <= NB_LETTRES_MAILLON));
+		}while((l != '\0') && (position < NB_LETTRES_MAILLON));
 		courant = courant->pNext;
 	}
 }
@@ -182,7 +182,7 @@ void afficher_maillons (mot_t *mot){
 	maillon_t *maillon;
 	int position;
 	char l;
-
+	printf("\t");
 	while(courant != NULL){
 		maillon = &(courant->pMaillon);
 		position=0;
@@ -195,10 +195,11 @@ void afficher_maillons (mot_t *mot){
 				printf("%c", l);
 			}
 			position++;
-		}while((l != '\0') && (position <= NB_LETTRES_MAILLON));
+		}while((l != '\0') && (position < NB_LETTRES_MAILLON));
 		courant = courant->pNext;
 		printf("}");
 	}
+	printf("\n");
 }
 
 /**
@@ -207,6 +208,7 @@ void afficher_maillons (mot_t *mot){
  * @param mot : pointeur vers une structure de mot
  */
 void afficher_mot (mot_t *mot){
+	printf("\t");
 	afficher_liste_lettres(mot->pTeteMot);
 	afficher_liste_positions(mot->pTeteListe);
 }
