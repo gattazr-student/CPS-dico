@@ -12,9 +12,9 @@
  */
 int main(int aArgc, char** aArgv){
 	FILE *wInput;
-	char *wWord;
 	unsigned int wLine, wCols;
-	mot_t* wMot;
+	dictionnaire_t *wDico;
+	char reponse;
 
 
 	/* Ouverture du fichier en paramètre si il existe. utilisation de stdin sinon */
@@ -30,17 +30,22 @@ int main(int aArgc, char** aArgv){
 
 	wLine = 0;
 	wCols = 0;
+	wDico = make_dico();
 
 	/* Traite les mots entrant dans stdin */
 	while(!feof(wInput)){
-		wWord = next_word(wInput, &wLine, &wCols);
-		wMot = make_mot(wWord, wLine, wCols);
-
-		fprintf(stdout, "%s (%d,%d)\n", wWord, wLine, wCols);
-		afficher_mot(wMot);
-		liberer_mot(wMot);
-		free(wWord);
+		insere_dico(wDico, next_word(wInput, wLine, wCols);
 	}
+	do{
+		printf("\tLecture finie, voulez-vous afficher le dictionnaire ? Y(y) / N(n)\n");
+		if(scanf("%c",&reponse)!=1){
+			printf("Y -> avec affichage\nN -> sans affichage\n");
+		}
+	}while( (reponse!='Y') || (reponse!='y') || (reponse!='N') || (reponse!='n'));
+	if(reponse == 'Y' || reponse == 'y'){
+		afficher_dico(wDico);
+	}
+	liberer_dico(wDico);
 
 	/* Ferme le fichier input si il ne s'agit pas de stdin */
 	if(fileno(wInput) != fileno(stdin)){
