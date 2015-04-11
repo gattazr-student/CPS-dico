@@ -184,58 +184,6 @@ void afficher_liste_lettres (lLettres_t *tete){
 }
 
 /**
- * afficher_maillons
- * Affichage des maillons d'un mot
- * @param tete : tete de la liste des maillons
- */
-void afficher_maillons (mot_t *mot){
-	lLettres_t *courantl = mot->pTeteMot;
-	maillon_t *maillon;
-	lEmplacement_t *courantp = mot->pTeteListe;
-	emplacement_t *lieu;
-	int position;
-	char l;
-	
-	printf("|\t[ ");
-	while(courantl != NULL){
-		maillon = &(courantl->pMaillon);
-		position=0;
-		printf("{");
-		do{
-			l = num_to_char(get_charnum(maillon,position));
-			if(l != '\0'){
-				printf("%c", l);
-			}
-			position++;
-		}while((l != '\0') && (position < NB_LETTRES_MAILLON));
-		if(l=='\0'){
-			while(position <= NB_LETTRES_MAILLON){
-				printf(" ");
-				position++;
-			}
-		}
-		courantl = courantl->pNext;
-		printf("}");
-		if(courantl != NULL){
-			printf(" -> ");
-		}
-	}
-	printf("\n|\t  |\n|\t  |-->");
-
-	
-	while(courantp != NULL){
-		lieu = &(courantp->pPos);
-		printf(" {%i, %i}", lieu->pLigne, lieu->pColonne);
-		courantp = courantp->pNext;
-		if(courantp != NULL){
-			printf(" -> ");
-		}
-	}
-
-	printf("\t]\n|\n");
-}
-
-/**
  * afficher_mot
  * Affichage d'un mot : ses lettres puis les positions
  * @param mot : pointeur vers une structure de mot
@@ -284,3 +232,57 @@ void liberer_mot (mot_t *mot){
 	liberer_lettres(mot->pTeteMot);
 	free(mot);
 }
+
+#ifdef DEBUG
+/**
+ * afficher_maillons
+ * Affichage des maillons d'un mot
+ * @param tete : tete de la liste des maillons
+ */
+void afficher_maillons (mot_t *mot){
+	lLettres_t *courantl = mot->pTeteMot;
+	maillon_t *maillon;
+	lEmplacement_t *courantp = mot->pTeteListe;
+	emplacement_t *lieu;
+	int position;
+	char l;
+
+	printf("|\t[ ");
+	while(courantl != NULL){
+		maillon = &(courantl->pMaillon);
+		position=0;
+		printf("{");
+		do{
+			l = num_to_char(get_charnum(maillon,position));
+			if(l != '\0'){
+				printf("%c", l);
+			}
+			position++;
+		}while((l != '\0') && (position < NB_LETTRES_MAILLON));
+		if(l=='\0'){
+			while(position <= NB_LETTRES_MAILLON){
+				printf(" ");
+				position++;
+			}
+		}
+		courantl = courantl->pNext;
+		printf("}");
+		if(courantl != NULL){
+			printf(" -> ");
+		}
+	}
+	printf("\n|\t  |\n|\t  |-->");
+
+
+	while(courantp != NULL){
+		lieu = &(courantp->pPos);
+		printf(" {%i, %i}", lieu->pLigne, lieu->pColonne);
+		courantp = courantp->pNext;
+		if(courantp != NULL){
+			printf(" -> ");
+		}
+	}
+
+	printf("\t]\n|\n");
+}
+#endif

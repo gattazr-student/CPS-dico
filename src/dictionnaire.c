@@ -15,7 +15,7 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	dictionnaire_t *wDico_courant;
 	dictionnaire_t *wDico_precedent;
 	mot_t *wMot;
-	int wCompare; 
+	int wCompare;
 
 	wDico_courant = *dico; /* on récupère le premier élement du dictionnaire */
 
@@ -98,6 +98,7 @@ void afficher_dico (dictionnaire_t *dico){
 	}
 }
 
+#ifdef DEBUG
 /**
  * afficher_maillons_dico
  * Affichage de tous les maillons de tous les mots d'un dictionnaire
@@ -110,3 +111,4 @@ void afficher_maillons_dico (dictionnaire_t *dico){
 		courant = courant->pNext;
 	}
 }
+#endif

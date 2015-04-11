@@ -20,7 +20,10 @@ Il nous reste à voir ce qu'est la suite de lettres. Le sujet nous oblige à jou
 Choix de programmation
 ----------------------
 
-TODO
+Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier maillon.c un constante. Appelé NB_LETTRES_MAILLON, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculé en divisant le nombre de bit
+
+Grâce à cette constante, il a suffit de changer le typedef maillon_t pour chager la taille du maillon et que cela soit appliqué dans tous le programme.
+
 
 Organisation logicielle
 -----------------------
@@ -41,22 +44,19 @@ La compilation et l'exécution de notre projet se fait donc de la façon suivant
 ```sh
 $ source ../setenv.sh
 $ make
-$ ./dico [-d] [fichier]
+$ ./dico [fichier]
 ```
-Les deux paramètres aux programmes dico sont optionnels.
+Le paramètre [fichier] est optionnel.
 
-Le programme permet de récupérer le texte tapés au clavier par un utilisateur et de faire le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci est valide, alors c'est ce fichier qui sera utilisé comme texte.
+Le programme permet de récupérer le texte entrés au clavier par un utilisateur et de faire le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci est valide, alors c'est ce fichier qui sera utilisé comme texte.
 
-Si l'application est lancé avec le flag -d, en plus de l'affichage normal du dictionnaire, le dictionnaire sera affiché sous forme de liste. Cela permet de visualiser facilement la façon dont est représenté le dictionnaire en mémoire.
+Dans le cas ou la constante DEBUG est défini pendant la compilation, en plus de l'affichage classique, le dictionnaire sera affiché sous formes de liste de mots. Cela permet de visualiser facilement les structures de données utilisés pour stocker les mots dans le dictionnaires.
 
 
 Limites / Extentions
 --------------------
 
-TODO
-marche avec toutes les tailles d'entiers de stockage, marche aussi avec des majuscules
-
-
+Par défault, les maillons utilisés pour stocker les lettres de chaque mot du dictionnaire ont une taille de 32 bits. Il est cependant possible d'utiliser des maillons de 8, 16 ou 64 bits. Pour cela, il faut définir pendant la compilation la constant INT8, INT16 ou INT64.
 
 
 Types définis :
@@ -72,18 +72,12 @@ Types définis :
 Fonctions :
 -----------
 
-Ce qui manque :
-
-
-Ce qui n'est pas encore testé :
-
-
-Ce qui marche :
 - print_dictionnaire                                [DONE]
 - compare_mots                                      [DONE]
 - make_dico                                         [DONE]
 - make_mot -> création + allocation                 [DONE]
-- free d'une liste (récursif ?)                     [DONE]
+- free d'une liste (récursif)                       [DONE]
 - char_to_num + num_to_char                         [DONE]
 - get_charnum & set_charnum                         [DONE]
 - print_mot -> print_lLettres + print_lPositions    [DONE]
+- afficher_maillons [DONE]
