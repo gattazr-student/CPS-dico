@@ -41,7 +41,8 @@ Limites / Extentions
 --------------------
 
 TODO
-
+marche avec toutes les tailles d'entiers de stockage, marche aussi avec des majuscules
+- on pourrait faire un affichage plus développer pour l'affichage par maillon, je suis chaud pour faire ça si tu veux ;)
 
 
 

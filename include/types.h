@@ -13,7 +13,7 @@ typedef struct lEmplacement{
 } lEmplacement_t;
 
 /* Maillon contenant les lettres d'un mot */
-typedef uint32_t maillon_t;
+typedef uint16_t maillon_t;
 
 /* Liste de maillon toutes les lettres d'un mot */
 typedef struct lLettres{

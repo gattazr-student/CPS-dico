@@ -5,25 +5,33 @@
 
 int NB_LETTRES_MAILLON = sizeof(maillon_t)*8/TAILLE_LETTRE;
 
-/* @Invariant : 0<= num <= sizeof(maillon_t)/TAILLE_LETTRE */
-/*
- * TODO: comments
+/*  
+ * set_charnum
+ * Permet de mettre une lettre dans le maillon en effaçant ce qu'il y avait avant
+ * @param maillon_t* : le maillon a modifier
+ * @param int : numéro de la lettre à changer dans le maillon
+ * @param uint8_t : correspond à l'entier codant la lettre initiale
+ * @Invariant bon_indice : 0<= num <= sizeof(maillon_t)/TAILLE_LETTRE
  */
 void set_charnum (maillon_t *maillon, int num, uint8_t l){
 	maillon_t mask = 0x1F; /* COMENTAIRE : MAKE A FUNCTION TO PRODUCE IT WITH NB_LETTRES_MAILLON */
 	maillon_t charnum = (maillon_t)l;
 
-	/* On décale le masque à la bonne place */
+	/* On décale le masque et la lettre à la bonne place */
 	mask <<= (TAILLE_LETTRE * (NB_LETTRES_MAILLON - num - 1));
 	charnum = charnum << (TAILLE_LETTRE * (NB_LETTRES_MAILLON - num - 1));
 	/* inversion du mask pour faire une initialisation avant l'écriture */
 	mask = ~mask;
-	*maillon = *maillon & mask;
+	*maillon = *maillon & mask; /* Effacement de l'ancienne valeur */
 	*maillon = *maillon | charnum;
 }
 
 /*
- * TODO: comments
+ * get_charnum
+ * Donne le chiffre qui code la lettre à la position donnée dans le maillon donné
+ * @param maillon_t* : Pointeur sur le maillon d'où l'on veut extraire une lettre
+ * @param int : numéro de la lettre en partant de poids forts de l'entier de stockage
+ * @Invariant bon_indice : 0<= num <= sizeof(maillon_t)/TAILLE_LETTRE
  */
 uint8_t get_charnum (maillon_t *maillon, int num){
 	maillon_t mask = 0x1F; /* COMENTAIRE : MAKE A FUNCTION TO PRODUCE IT WITH NB_LETTRES_MAILLON */
