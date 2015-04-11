@@ -14,7 +14,7 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	dictionnaire_t *wDico_courant;
 	dictionnaire_t *wDico_precedent;
 	mot_t *wMot;
-	int wCompare=1; /* on doit inserer en tête si jamais le dico est vide */
+	int wCompare; /* on doit inserer en tête si jamais le dico est vide */
 
 	wDico_courant = *dico; /* on récupère le premier élement du dictionnaire */
 
@@ -35,7 +35,7 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	}else{ /* on continue de cherche la place dans le dictionnaire */
 		wDico_precedent = wDico_courant;
 		wDico_courant = wDico_courant->pNext; /* on avance d'une position */
-		wCompare = -1;
+
 		while(wDico_courant != NULL && wCompare > 0){
 			wMot = wDico_courant->pMot;
 			wCompare = compare_mots(mot, wMot);
