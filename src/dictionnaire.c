@@ -1,8 +1,9 @@
 #include <types.h>
+#include <dictionnaire.h>
 #include <mot.h>
 #include <stdlib.h>
 
-void inserer_mot_dico (dictionnaire_t **dico, char *mot, int *nb_l, int *nb_c){
+void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	/* je peux utiliser :
 
 	int compare_mots(char* aWord, mot_t* aMot);
@@ -19,37 +20,36 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int *nb_l, int *nb_c){
 	dictionnaire_t *wDico_courant;
 	dictionnaire_t *wDico_precedent;
 	mot_t *wMot;
-	int wCompare=-1; // on doit inserer en tête si jamais le dico est vide
+	int wCompare=-1; /* on doit inserer en tête si jamais le dico est vide */
 
-	wDico_courant = &dico; // on récupère l'adresse du dictionnaire
+	wDico_courant = *dico; /* on récupère le premier élement du dictionnaire */
 
 	if(wDico_courant != NULL){
-		wMot = (&dico)->pMot; // on récupère le premier mot
-		// on fait cela pour savoir si l'on fait un ajout en tête du du dictionnaire
+		wMot = wDico_courant->pMot; /* on récupère le premier mot */
+		/* on fait cela pour savoir si l'on fait un ajout en tête du du dictionnaire */
 		wCompare = compare_mots(mot, wMot);
 	}
-	if(wCompare > 0){ // cas de l'ajout en tête
-		wMot = make_mot(mot, &nb_l, &nb_c); // wMot pointe vers le premier mot du dictionnaire
-		wDico_courant = make_dico(); // création d'une nouvelle cellule du dictionnaire
-		wDico_courant->pMot = wMot; // mise en place du premier mot
-		wDico_courant->pNext = *dico; // mise en place du reste du dictionnaire
-		*dico = wDico_courant; // mise à jour du dictionnaire de base
-	}else if(wCompare == 0){ // cas ou l'on ajout à la liste de position
-		update_mot(wMot, &nb_l, &nb_c);
-	}else{ // on continue de cherche la place dans le dictionnaire
+	if(wCompare > 0){ /* cas de l'ajout en tête */
+		wMot = make_mot(mot, nb_l, nb_c); /* wMot pointe vers le premier mot du dictionnaire */
+		*dico = make_dico(); /* création d'une nouvelle cellule du dictionnaire */
+		(*dico)->pMot = wMot; /* mise en place du premier mot */
+		(*dico)->pNext = wDico_courant; /* mise en place du reste du dictionnaire */
+	}else if(wCompare == 0){ /* cas ou l'on ajout à la liste de position */
+		update_mot(wMot, nb_l, nb_c);
+	}else{ /* on continue de cherche la place dans le dictionnaire */
 		wDico_precedent = wDico_courant;
-		wDico_courant = wDico_courant->pNext; // on avance d'une position
+		wDico_courant = wDico_courant->pNext; /* on avance d'une position */
 		wCompare = -1;
 		while(wDico_courant != NULL && wCompare < 0){
 			wMot = wDico_courant->pMot;
 			wCompare = compare_mots(mot, wMot);
-			wDico_precedent = wDico_courant; // on garde en mémoire la cellule d'avant
-			wDico_courant = wDico_courant->pNext; // on avance d'une position
+			wDico_precedent = wDico_courant; /* on garde en mémoire la cellule d'avant */
+			wDico_courant = wDico_courant->pNext; /* on avance d'une position */
 		}
-		if(wCompare == 0){ // on vient de trouver le mot donc on met à jour sa liste de positions
-			update_mot(wMot, &nb_l, &nb_c);
-		}else{ // on est arrivé à la fin du dictionnaire ou on est bien placé
-			wMot = make_mot(mot, &nb_l, &nb_c);
+		if(wCompare == 0){ /* on vient de trouver le mot donc on met à jour sa liste de positions */
+			update_mot(wMot, nb_l, nb_c);
+		}else{ /* on est arrivé à la fin du dictionnaire ou on est bien placé */
+			wMot = make_mot(mot, nb_l, nb_c);
 			wDico_precedent->pNext = make_dico();
 			(wDico_precedent->pNext)->pMot = wMot;
 			(wDico_precedent->pNext)->pNext = wDico_courant;

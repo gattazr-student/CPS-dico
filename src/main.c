@@ -37,7 +37,7 @@ int main(int aArgc, char** aArgv){
 	/* Traite les mots entrant dans stdin */
 	while(!feof(wInput)){
 		wWord = next_word(wInput, &wLine, &wCols);
-		insere_dico(wDico, wWord, wLine, wCols);
+		inserer_mot_dico(&wDico, wWord, wLine, wCols);
 		free(wWord);
 	}
 
