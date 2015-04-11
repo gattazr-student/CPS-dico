@@ -189,28 +189,50 @@ void afficher_liste_lettres (lLettres_t *tete){
  * @param tete : tete de la liste des maillons
  */
 void afficher_maillons (mot_t *mot){
-	lLettres_t *courant = mot->pTeteMot;
+	lLettres_t *courantl = mot->pTeteMot;
 	maillon_t *maillon;
+	lEmplacement_t *courantp = mot->pTeteListe;
+	emplacement_t *lieu;
 	int position;
 	char l;
-	printf("\t");
-	while(courant != NULL){
-		maillon = &(courant->pMaillon);
+	
+	printf("|\t[ ");
+	while(courantl != NULL){
+		maillon = &(courantl->pMaillon);
 		position=0;
+		printf("{");
 		do{
 			l = num_to_char(get_charnum(maillon,position));
 			if(l != '\0'){
-				if(position == 0){
-					printf("{");
-				}
 				printf("%c", l);
 			}
 			position++;
 		}while((l != '\0') && (position < NB_LETTRES_MAILLON));
-		courant = courant->pNext;
+		if(l=='\0'){
+			while(position <= NB_LETTRES_MAILLON){
+				printf(" ");
+				position++;
+			}
+		}
+		courantl = courantl->pNext;
 		printf("}");
+		if(courantl != NULL){
+			printf(" -> ");
+		}
 	}
-	printf("\n");
+	printf("\n|\t  |\n|\t  |-->");
+
+	
+	while(courantp != NULL){
+		lieu = &(courantp->pPos);
+		printf(" {%i, %i}", lieu->pLigne, lieu->pColonne);
+		courantp = courantp->pNext;
+		if(courantp != NULL){
+			printf(" -> ");
+		}
+	}
+
+	printf("\t]\n|\n");
 }
 
 /**
