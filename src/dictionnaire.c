@@ -2,7 +2,6 @@
 #include <dictionnaire.h>
 #include <mot.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 	/* je peux utiliser :
@@ -30,9 +29,9 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 		/* on fait cela pour savoir si l'on fait un ajout en tête du du dictionnaire */
 		wCompare = compare_mots(mot, wMot);
 	}else{
-		wCompare = 1;
+		wCompare = -1;
 	}
-	if(wCompare > 0){ /* cas de l'ajout en tête */
+	if(wCompare < 0){ /* cas de l'ajout en tête */
 		wMot = make_mot(mot, nb_l, nb_c); /* wMot pointe vers le premier mot du dictionnaire */
 		*dico = make_dico(); /* création d'une nouvelle cellule du dictionnaire */
 		(*dico)->pMot = wMot; /* mise en place du premier mot */
@@ -43,7 +42,7 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 		wDico_precedent = wDico_courant;
 		wDico_courant = wDico_courant->pNext; /* on avance d'une position */
 		wCompare = -1;
-		while(wDico_courant != NULL && wCompare < 0){
+		while(wDico_courant != NULL && wCompare > 0){
 			wMot = wDico_courant->pMot;
 			wCompare = compare_mots(mot, wMot);
 			wDico_precedent = wDico_courant; /* on garde en mémoire la cellule d'avant */

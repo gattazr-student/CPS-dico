@@ -43,7 +43,7 @@ uint8_t get_charnum (maillon_t *maillon, int num){
  * char_to_num
  * Convertit un caractère en un entier
  * Si le charatère est une lettre de l'alphabet (en majuscule ou minuscule),
- * l'entier retourné est sa position dans l'alphabet. SInon, -1 est retourné.
+ * l'entier retourné est sa position dans l'alphabet. Sinon, 0 est retourné.
  * @param aChar : lettre à convertir
  * @return : entier correspondant à la position de la lettre aChar dans
  *           l'alphabet
@@ -54,7 +54,7 @@ uint8_t char_to_num (char aChar){
 	}else if (aChar >= 'A' && aChar <= 'Z'){
 		return aChar - 'A' + 1;
 	}
-	return -1;
+	return 0;
 }
 
 /**

@@ -10,47 +10,58 @@
  * compare_mot
  * @param aWord : mot à comparer
  * @param aMot : mot à comparer (convertis)
- * @return int : 0 si mot égaux, val négative si aWord1 <lex aWord2,
- * val positive si aWord1 >lex aWord2
+ * @return int : 0 si mot égaux, val négative si aWord <lex aMot,
+ * val positive si aWord >lex aMot
  */
 int compare_mots(char* aWord, mot_t* aMot){
-	int wLength;
-	uint8_t wChar2;
-	uint8_t wChar1;
+	uint8_t wChar1, wChar2;
 	lLettres_t *wCourant;
 	int wEmplacement;
 	int wI;
 
-	wLength = strlen(aWord);
 	wEmplacement = 0;
 	wI = 0;
 	wCourant = aMot->pTeteMot;
-	wChar2 = get_charnum(&(wCourant->pMaillon), wEmplacement);
-	wChar1 = char_to_num(aWord[wI]);
-	while(wChar1 == wChar2){
-		if(wEmplacement > NB_LETTRES_MAILLON){
+
+	/* Initialisation de wChar1 pour un résultat cohérent si aWord == NULL */
+	wChar1 = -1;
+	do{
+		/* Récupération des deux caractères à tester */
+		wChar1 = char_to_num(aWord[wI]);
+		if(wCourant == NULL){
+			break;
+		}
+		wChar2 = get_charnum(&(wCourant->pMaillon), wEmplacement);
+
+		/* Déplace courant sur le maillon suivant si necessaire*/
+		if(wEmplacement == NB_LETTRES_MAILLON - 1){
 			wEmplacement = 0;
 			wCourant = wCourant->pNext;
 		}else{
 			wEmplacement++;
 		}
 		wI++;
-		wChar2 = get_charnum(&(wCourant->pMaillon), wEmplacement);
-		wChar1 = char_to_num(aWord[wI]);
-	}
 
-	if(wI == wLength-1){
-		if(wChar2 == '\0'){
-			return wChar1;
+		/* Vérifie que l'on a pas atteint la fin d'un des deux mots */
+		if(wChar1 == '\0' || wChar2 == '\0'){
+			break;
+		}
+
+	}while(wChar1 == wChar2); /* Boucle tant que les caractères récupéres sont égaux */
+
+	if(wCourant == NULL || wChar2 == '\0'){
+		if(wChar1 == '\0'){
+			/* aMot et aWord sont égaux (même longueur + meme contenu)*/
+			return 0;
 		}else{
-			return wChar2;
+			/* aMot est plus court que aMot et aMot est préfixe de aWord. Donc aMot <lew aWord  */
+			return wChar1;
 		}
 	}
-	if(wChar2 == '\0'){
-		return wChar1;
-	}
 
+	/* Tous les autres cas (une lettre est différente ou aWord est plus court que aMot) */
 	return wChar1 - wChar2;
+
 }
 
 /**
