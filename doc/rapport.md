@@ -4,7 +4,7 @@ Rapport
 Présentation du sujet
 ---------------------
 
-Nous souhaitons faire un lexique de tous les mots présents dans un texte, et pour les retrouver facilement nous ajoutons à chaque mot le numéro de la ligne où il est présent mais après combien de caractères le mot commence sur cette ligne. Nous ne connaissons pas la taille du texte avant de la lire en entier alors nous devons créer une structure dynamique pour ne pas avoir de problème de gestion de mémoire. 
+Nous souhaitons faire un lexique de tous les mots présents dans un texte, et pour les retrouver facilement nous ajoutons à chaque mot le numéro de la ligne où il est présent et après combien de caractères le mot commence sur cette ligne. Etant donée que nous ne connaissons pas la taille du texte avant de le lire en entier alors nous devons créer une structure dynamique qui aura exactement la taille nécessaire permettant de contenir tous le lexique.
 
 Choix de conception
 -------------------
@@ -13,9 +13,9 @@ Choix de conception
 Nous pouvons modéliser la structure de donnée nécessaire à notre problème de gestion de mémoire par un embriquement de listes chaînées. Nous avons donc choisi de gérer un dictionnaire comme un pointeur vers la permière case chainée. Il est important d'avoir un pointeur vers ce dictionnaire car lors d'un ajout en tête il serai trop couteux de devoir déplacer tout le contenue d'un dictionnaire pour créer une place libre en début liste chainée. Ainsi avec un pointeur nous pouvons nous abstraire de se problème facilement.
 Ensuite nous devons spécifier ce que chaque case contient. La case est coupée en deux, la deuxième partie servant à trouver la case suivante par un pointeur vers cette case. La première doit cond contenir un mot avec toutes les informations.
 
-Un mot est composé d'une suite de lettres mais aussi des emplacements où il est présent dans le texte. 
-Commençons par modéliser les positions. Nous ne savons pas si le mot va être présent plusieurs fois dans le texte nous avons donc deboin ici aussi d'une liste chaînée qui grandi en fonction de la répétion du mot dans le texte. Nous avons contruit cette structure de listes d'emplacement sur le même principe que le dictionnaire, avec la deuxième partie de la case qui pointe vers la suivante et la première qui contient un emplacement (couple ligne, colonne).
-Il nous reste à voir ce qu'est la suite de lettres. Le sujet nous oblige à jouer avec des entiers de différents tailles pour mettre nos lettres dedans. Ceci est basé sur le fait que dans notre alphabet nous n'avons que 26 lettres et donc que nous pouvons les représenter sur seulement 5 bits alors que normalement un caractère simple (char) est sur 8 bits. Nous devons donc gérer une liste d'entiers 
+Un mot est composé d'une suite de lettres mais aussi des emplacements où il est présent dans le texte.
+Commençons par modéliser les positions. Nous ne savons pas si le mot va être présent plusieurs fois dans le texte nous avons donc besoin ici aussi d'une liste chaînée qui grandi en fonction de la répétion du mot dans le texte. Nous avons contruit cette structure de listes d'emplacement sur le même principe que le dictionnaire, avec la deuxième partie de la case qui pointe vers la suivante et la première qui contient un emplacement (couple d'entiers ligne, colonne).
+Il nous reste à voir ce qu'est la suite de lettres. Le sujet nous oblige à jouer avec des entiers de différents tailles pour mettre nos lettres dedans. Ceci est basé sur le fait que dans notre alphabet nous n'avons que 26 lettres et donc que nous pouvons les représenter sur seulement 5 bits alors que normalement un caractère simple (char) est sur 8 bits. Nous devons donc gérer une liste d'entiers
 
 Choix de programmation
 ----------------------
@@ -35,14 +35,26 @@ TODO
 Comment utiliser notre application, la compiler
 -----------------------------------------------
 
-TODO
+L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant necessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
+
+La compilation et l'exécution de notre projet se fait donc de la façon suivante :
+```sh
+$ source ../setenv.sh
+$ make
+$ ./dico [-d] [fichier]
+```
+Les deux paramètres aux programmes dico sont optionnels.
+
+Le programme permet de récupérer le texte tapés au clavier par un utilisateur et de faire le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci est valide, alors c'est ce fichier qui sera utilisé comme texte.
+
+Si l'application est lancé avec le flag -d, en plus de l'affichage normal du dictionnaire, le dictionnaire sera affiché sous forme de liste. Cela permet de visualiser facilement la façon dont est représenté le dictionnaire en mémoire.
+
 
 Limites / Extentions
 --------------------
 
 TODO
 marche avec toutes les tailles d'entiers de stockage, marche aussi avec des majuscules
-- on pourrait faire un affichage plus développer pour l'affichage par maillon, je suis chaud pour faire ça si tu veux ;)
 
 
 
@@ -51,8 +63,8 @@ Types définis :
 ---------------
 
 - couple entier : emplacements
-- liste position :lEmplacements
-- maillon : entier 32 bits
+- liste position : lEmplacements
+- maillon : entier 8/16/32/64 bits (uint)
 - liste de maillon : lLettres
 - liste de maillon, liste emplacements : mot_t
 - liste mots : t_dictionnaire
@@ -61,13 +73,13 @@ Fonctions :
 -----------
 
 Ce qui manque :
-- insertion_dico
-- autre chose ?
 
-Ce qui n'est pas encore tester :
-- print_dictionnaire                                [NO TEST]
+
+Ce qui n'est pas encore testé :
+
 
 Ce qui marche :
+- print_dictionnaire                                [DONE]
 - compare_mots                                      [DONE]
 - make_dico                                         [DONE]
 - make_mot -> création + allocation                 [DONE]

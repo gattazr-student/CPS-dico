@@ -13,7 +13,7 @@ LIBRARIES=-ltokenize
 
 SRCS=main.c maillon.c mot.c dictionnaire.c
 OBJS=${SRCS:.c=.o}
-EXEC=main
+EXEC=dico
 
 #-------------------------------------------------
 #            Adapt Makefile to target
