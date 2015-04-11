@@ -15,6 +15,8 @@ int main(int aArgc, char** aArgv){
 	unsigned int wLine, wCols;
 	dictionnaire_t *wDico;
 	char reponse;
+	char* wWord;
+	int wRepeat;
 
 
 	/* Ouverture du fichier en paramètre si il existe. utilisation de stdin sinon */
@@ -34,17 +36,37 @@ int main(int aArgc, char** aArgv){
 
 	/* Traite les mots entrant dans stdin */
 	while(!feof(wInput)){
-		insere_dico(wDico, next_word(wInput, wLine, wCols);
+		wWord = next_word(wInput, &wLine, &wCols);
+		insere_dico(wDico, wWord, wLine, wCols);
+		free(wWord);
 	}
+
 	do{
-		printf("\tLecture finie, voulez-vous afficher le dictionnaire ? Y(y) / N(n)\n");
-		if(scanf("%c",&reponse)!=1){
-			printf("Y -> avec affichage\nN -> sans affichage\n");
+
+		do{
+			wRepeat = 1;
+			printf("\tLecture finie, que voulez-vous faire ?\n");
+			printf("\t 1 - afficher le dictionnaire\n");
+			printf("\t 2 - afficher les maillons\n");
+			printf("\t 3 - quitter\n");
+			fflush(stdin);
+			scanf("%c",&reponse);
+			if(reponse < '1' || reponse > '3' ){
+				wRepeat = 0;
+				printf("Choix incorrect\n\n");
+			}
+		}while( wRepeat );
+		switch(reponse){
+			case '1':
+				afficher_dico(wDico);
+			break;
+			case '2':
+				/* TODO: afficher_maillons de chaque mots du dico */
+			break;
 		}
-	}while( (reponse!='Y') || (reponse!='y') || (reponse!='N') || (reponse!='n'));
-	if(reponse == 'Y' || reponse == 'y'){
-		afficher_dico(wDico);
-	}
+	}while(reponse != '3');
+
+
 	liberer_dico(wDico);
 
 	/* Ferme le fichier input si il ne s'agit pas de stdin */

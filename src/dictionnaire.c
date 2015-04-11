@@ -42,3 +42,16 @@ void afficher_dico (dictionnaire_t *dico){
 		courant = courant->pNext;
 	}
 }
+
+/**
+ * afficher_maillons_dico
+ * Affichage de tous les maillons de tous les mots d'un dictionnaire
+ * @param : pointeur vers un dictionnaire
+ */
+void afficher_maillons_dico (dictionnaire_t *dico){
+	dictionnaire_t *courant = dico;
+	while(courant != NULL){
+		afficher_maillons(courant->pMot);
+		courant = courant->pNext;
+	}
+}

@@ -7,4 +7,6 @@ void update_mot(mot_t* aMot, int aLigne, int aColonne);
 
 void afficher_mot (mot_t *mot);
 
+void afficher_maillons (mot_t *mot);
+
 void liberer_mot (mot_t *mot);

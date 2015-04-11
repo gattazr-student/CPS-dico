@@ -173,6 +173,35 @@ void afficher_liste_lettres (lLettres_t *tete){
 }
 
 /**
+ * afficher_maillons
+ * Affichage des maillons d'un mot
+ * @param tete : tete de la liste des maillons
+ */
+void afficher_maillons (mot_t *mot){
+	lLettres_t *courant = mot->pTeteMot;
+	maillon_t *maillon;
+	int position;
+	char l;
+
+	while(courant != NULL){
+		maillon = &(courant->pMaillon);
+		position=0;
+		do{
+			l = num_to_char(get_charnum(maillon,position));
+			if(l != '\0'){
+				if(position == 0){
+					printf("{");
+				}
+				printf("%c", l);
+			}
+			position++;
+		}while((l != '\0') && (position <= NB_LETTRES_MAILLON));
+		courant = courant->pNext;
+		printf("}");
+	}
+}
+
+/**
  * afficher_mot
  * Affichage d'un mot : ses lettres puis les positions
  * @param mot : pointeur vers une structure de mot
