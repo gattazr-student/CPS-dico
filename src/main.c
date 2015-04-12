@@ -4,6 +4,7 @@
 #include <types.h>
 #include <maillon.h>
 #include <mot.h>
+#include <string.h>
 #include <dictionnaire.h>
 
 
@@ -40,8 +41,10 @@ int main(int aArgc, char** aArgv){
 	printf("\n\nDictionnaire :\n");
 	afficher_dico(wDico);
 
-	printf("\n\nMaillons :\n");
-	afficher_maillons_dico(wDico);
+#ifdef DEBUG
+		printf("\n\nMaillons :\n");
+		afficher_maillons_dico(wDico);
+#endif
 
 	/* Libération de la mémoire qui a été alloué */
 	liberer_dico(wDico);

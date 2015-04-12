@@ -21,9 +21,9 @@ Notre structure de donnée est décrite dans le fichier *types.h*.
 
 ### *Fonctions*
 
-Nos fonctions doivent **être économes en mémoire** car le texte peut être très gros. Notre structure de donnée de doit pas être passé en argument, et donc copier à chaque appel de fonctions. Nous avons donc choisi de donner le plus souvent possible des **pointeurs vers la structure de donnée**. 
-Dès que nous avons commencé à coder, nous avons pu voir que certaines portions de code se trouvaient à plusieurs endroits, nous avons donc choisi d'en faire des fonctions auxiliaires, de même que certaines variables que nous avons rendu globale dans les fichiers où la variable était utilisée. 
-De plus, nous avons essayer de nous **abstraire** le plus possible de **la taille des entiers de stockage**, ce qui rend notre application viable pour toutes les tailles de stockage possibles. 
+Nos fonctions doivent **être économes en mémoire** car le texte peut être très gros. Notre structure de donnée de doit pas être passé en argument, et donc copier à chaque appel de fonctions. Nous avons donc choisi de donner le plus souvent possible des **pointeurs vers la structure de donnée**.
+Dès que nous avons commencé à coder, nous avons pu voir que certaines portions de code se trouvaient à plusieurs endroits, nous avons donc choisi d'en faire des fonctions auxiliaires, de même que certaines variables que nous avons rendu globale dans les fichiers où la variable était utilisée.
+De plus, nous avons essayer de nous **abstraire** le plus possible de **la taille des entiers de stockage**, ce qui rend notre application viable pour toutes les tailles de stockage possibles.
 Enfin nous avons choisi de **ne pas faire d'appel récursif** dans nos fonctions par soucis de **taille de pile**, celle-ci pouvant se remplir rapidement si nous sommes en présence d'un grand texte avec beaucoup de fois les mêmes mots. En effet, trop de listes imbriquées avec une fonction récursives pour chaque liste pourrait saturer la pile.
 Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement possible**, ainsi que les variables, qui sont d'ailleurs réduites au strict minimum.
 
@@ -31,11 +31,14 @@ Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement 
 
 Nous avons choisi de coder notre application en C car le C est un langage proche de la mémoire et de machine au sens matérielle. Nous avons hésité à faire des fonctions en assembleur pour gérer les entiers de stockage, mais nous ne voulions pas rentrer dans un niveau d'abstraction inférieur. Le C nous permet de manipuler les bits facilement.
 
-Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons libérer (free) la mémoire utilisée.
+Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons **libéré** (free) la mémoire utilisée.
 
-Nous gérons tous les choix d'affichages et de gestion de fichiers dans notre main, car l'application doit s'arrêter proprement si elle rencontre un problème au cours de son exécution.
+Nous gérons tous les **choix d'affichages** et de **gestion de fichiers** dans notre *main*, car l'application doit s'arrêter proprement si elle rencontre un problème au cours de son exécution.
 
-Nous avons essayé de ne faire que des fonctions essentielles, nous les utilisons toutes. Les fonctions compiquées, que nous avons mis du temps à dévélopper, sont commentées en détails pour une meilleure (re)lecture.
+Nous avons essayé de ne faire que des fonctions essentielles, nous les utilisons toutes. Les **fonctions** compiquées, que nous avons mis du temps à dévélopper, sont **commentées** en détails pour une meilleure (re)lecture.
+
+Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier *maillon.c* une **constante**. Appelée *NB_LETTRES_MAILLON*, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculée en divisant le nombre de bit par la taille d'une lettre (5 bits).
+Grâce à cette constante, il a suffit de changer le typedef *maillon_t* pour changer la taille du maillon et que cela soit appliqué dans tout le programme.
 
 ## Organisation logicielle
 
@@ -49,13 +52,13 @@ La compilation et l'exécution de notre projet se fait donc de la façon suivant
 ```sh
 $ source ../setenv.sh
 $ make
-$ ./dico [-d] [fichier]
+$ ./dico [fichier]
 ```
-Les deux paramètres aux programmes dico sont optionnels.
+Le paramètre [fichier] est optionnel.
 
-Le programme permet de récupérer le texte tapé au clavier par un utilisateur et de faire le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci est valide, alors c'est ce fichier qui sera utilisé comme texte.
+Le programme permet de récupérer le texte entrés au clavier par un utilisateur et de faire le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci est valide, alors c'est ce fichier qui sera utilisé comme texte.
 
-Si l'application est lancé avec le flag -d, en plus de l'affichage normal du dictionnaire, le dictionnaire sera affiché sous forme de liste. Cela permet de visualiser facilement la façon dont est représentée le dictionnaire en mémoire.
+Dans le cas ou la constante DEBUG est défini pendant la compilation, en plus de l'affichage classique, le dictionnaire sera affiché sous formes de liste de mots. Cela permet de visualiser facilement les structures de données utilisés pour stocker les mots dans le dictionnaires.
 
 ## Exemples d'éxecution
 
@@ -67,10 +70,9 @@ TODO
 
 Nous avons essayé de faire des améliorations sur notre application.
 En effet, nous pouvons gérer des **lettres majuscules** simplement, mais elles seront stockées comme des lettres miniscules, car il s'agit du même mot, qu'il soit en début de phrase ou pas.
-Notre manière d'implémenter les fonctions et procédures de gestions de listes de stockage pour les lettres, nous permet de **faire varier rapidement la taille des entiers de stockage**, lors de la compilation.
+Notre manière d'implémenter les fonctions et procédures de gestions de listes de stockage pour les lettres, nous permet de **faire varier rapidement la taille des entiers de stockage**, lors de la compilation. Pour cela, il faut définir pendant la compilation la constante *INT8*, *INT16* ou *INT64*.
 De plus nous avons essayé de **représenter** le mieux possible, dans le ternimal, les **listes chaînées** constituant notre structure de donnée. Ainsi nous avons ajouté un mode pour voir l'intérieur des listes, **détaillant chaque case**. Ceci passe par l'affichage des maillons, avec les cases vides, et des listes de positions. Cette amélioration est très utiles pour voir les différences entre les tailles d'entiers de stockage, car on distingue bien la taille de chaque maillon.
 
 ### *Limites*
 
 Nous n'avons pas pu **gérer les accents** sur les lettres. Ceci aurait été pas bien compliquer mais non avant manquer de temps et d'une connaissance approfondie de la table ASCII étendue.
-

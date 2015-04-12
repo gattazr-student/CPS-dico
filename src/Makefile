@@ -7,7 +7,7 @@
 #                    VARIABLES
 #-------------------------------------------------
 CC=gcc
-CFLAGS=-g -Wall -pedantic -I../include
+CFLAGS=-g -Wall -pedantic -I../include -DDEBUG -DINT16
 LDFLAGS=
 LIBRARIES=-ltokenize
 
