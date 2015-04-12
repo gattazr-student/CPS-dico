@@ -9,7 +9,10 @@
 
 
 /*
- * TODO: comments
+ * Application pour lire un texte et donner les mots contenus dedans avec leurs emplacements
+ * Peut prendre un nom de fihcier en argument ou pas
+ * Extension : lors de la compilation, donner -DDEBUG permet de voir comment s'articlue les maillons
+ * EXtension : lors de la compilation, donner -DINTX pour un eniter de sockage sur X bits (X = 8, 16, 32, 64)
  */
 int main(int aArgc, char** aArgv){
 	FILE *wInput;

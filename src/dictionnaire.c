@@ -23,7 +23,6 @@ void inserer_mot_dico (dictionnaire_t **dico, char *mot, int nb_l, int nb_c){
 		wMot = wDico_courant->pMot; /* on récupère le premier mot */
 		/* on fait cela pour savoir si l'on fait un ajout en tête du dictionnaire */
 		wCompare = compare_mots(mot, wMot);
-/*afficher_mot(wMot);*/
 	}else{ /* on doit inserer en tête si jamais le dico est vide */
 		wCompare = -1;
 	}
