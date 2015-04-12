@@ -29,17 +29,17 @@ Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement 
 
 ## Choix de programmation
 
-### Taille des maillons
+### *Taille des maillons*
 Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier *maillon.c* une **constante**. Appelée *NB_LETTRES_MAILLON*, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculée en divisant le nombre de bit par la taille d'une lettre (5 bits).
 Grâce à cette constante, il a suffit de changer le typedef *maillon_t* pour changer la taille du maillon et que cela soit appliqué dans tout le programme.
 
 
-### Compare
+### *Compare*
 Contrairement à ce qui était proposé, nous n'avons pas définie une fonction compare_mots qui prend en paramètres deux mots. A la place, nous avons défini un fonction qui prend en paramètre un mot et une chaine de caractère.
 
 Nous aurions pu faire ce choix mais cela nous aurais forcé à exposer la fonction ou à effectuer des copies des listes d'emplacement. Nous avons donc décider de ne pas opter pour cette solution.
 
-### Autres
+### *Autres*
 Nous gérons tous les **choix d'affichages** et de **gestion de fichiers** dans notre *main*, car l'application doit s'arrêter proprement si elle rencontre un problème au cours de son exécution.
 
 Nous avons essayé de ne faire que des fonctions essentielles, nous les utilisons toutes. Les **fonctions** compiquées, que nous avons mis du temps à dévélopper, sont **commentées** en détails pour une meilleure (re)lecture.
@@ -47,9 +47,6 @@ Nous avons essayé de ne faire que des fonctions essentielles, nous les utilison
 Nous avons choisi de coder notre application en C car le C est un langage proche de la mémoire et de machine au sens matérielle. Nous avons hésité à faire des fonctions en assembleur pour gérer les entiers de stockage, mais nous ne voulions pas rentrer dans un niveau d'abstraction inférieur. Le C nous permet de manipuler les bits facilement.
 
 Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons **libéré** (free) la mémoire utilisée.
-
-
-
 
 ## Organisation logicielle
 

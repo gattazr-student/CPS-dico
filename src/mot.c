@@ -6,8 +6,8 @@
 #include <stdlib.h>
 
 /**
- * TODO: comments
  * compare_mot
+ * Fonction de comparaison classique (cf. strcmp) entre un string et un maillon
  * @param aWord : mot à comparer
  * @param aMot : mot à comparer (convertis)
  * @return int : 0 si mot égaux, val négative si aWord <lex aMot,
@@ -65,9 +65,9 @@ int compare_mots(char* aWord, mot_t* aMot){
 }
 
 /**
- * TODO: comments
  * make_mot
- * @param aWord :
+ * Allocation de la mémoire pour créer un mot dans son ensemble
+ * @param aWord : le string représentant le mot
  * @param aLigne : Emplacement du mot (ligne)
  * @param aColonne : Emplacement du mot (colonne)
  * @return mot_t* : nouveau mot contenant
@@ -125,9 +125,9 @@ mot_t* make_mot(char* aWord, int aLigne, int aColonne){
 }
 
 /**
- * TODO: comments
  * update_mot
- * @param aWord :
+ * Permet de mettre un jour une liste de positions
+ * @param aWord : le string représentant le mot
  * @param aLigne : Emplacement du mot (ligne)
  * @param aColonne : Emplacement du mot (colonne)
  */
