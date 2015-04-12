@@ -1,44 +1,46 @@
-Rapport
-===============
+# Rapport
 
-Présentation du sujet
----------------------
+## Présentation du sujet
 
 Nous souhaitons faire un lexique de tous les mots présents dans un texte, et pour les retrouver facilement nous ajoutons à chaque mot le numéro de la ligne où il est présent et après combien de caractères le mot commence sur cette ligne. Etant donée que nous ne connaissons pas la taille du texte avant de le lire en entier alors nous devons créer une structure dynamique qui aura exactement la taille nécessaire permettant de contenir tous le lexique.
 
-Choix de conception
--------------------
-(structure des données et fonctions)
+## Choix de conception
 
-Nous pouvons modéliser la structure de donnée nécessaire à notre problème de gestion de mémoire par un embriquement de listes chaînées. Nous avons donc choisi de gérer un dictionnaire comme un pointeur vers la permière case chainée. Il est important d'avoir un pointeur vers ce dictionnaire car lors d'un ajout en tête il serai trop couteux de devoir déplacer tout le contenue d'un dictionnaire pour créer une place libre en début liste chainée. Ainsi avec un pointeur nous pouvons nous abstraire de se problème facilement.
+### *Structure des données*
+
+Nous pouvons modéliser la structure de donnée nécessaire à notre problème de **gestion de mémoire** par un embriquement de listes chaînées. Nous avons donc choisi de gérer un dictionnaire comme un pointeur vers la permière case chainée. Il est important d'avoir un **pointeur vers ce dictionnaire** car lors d'un ajout en tête il serai trop couteux de devoir déplacer tout le contenue d'un dictionnaire pour créer une place libre en début liste chainée. Ainsi avec un pointeur nous pouvons nous abstraire de ce problème facilement.
 Ensuite nous devons spécifier ce que chaque case contient. La case est coupée en deux, la deuxième partie servant à trouver la case suivante par un pointeur vers cette case. La première doit cond contenir un mot avec toutes les informations.
 
-Un mot est composé d'une suite de lettres mais aussi des emplacements où il est présent dans le texte.
-Commençons par modéliser les positions. Nous ne savons pas si le mot va être présent plusieurs fois dans le texte nous avons donc besoin ici aussi d'une liste chaînée qui grandi en fonction de la répétion du mot dans le texte. Nous avons contruit cette structure de listes d'emplacement sur le même principe que le dictionnaire, avec la deuxième partie de la case qui pointe vers la suivante et la première qui contient un emplacement (couple d'entiers ligne, colonne).
-Il nous reste à voir ce qu'est la suite de lettres. Le sujet nous oblige à jouer avec des entiers de différents tailles pour mettre nos lettres dedans. Ceci est basé sur le fait que dans notre alphabet nous n'avons que 26 lettres et donc que nous pouvons les représenter sur seulement 5 bits alors que normalement un caractère simple (char) est sur 8 bits. Nous devons donc gérer une liste d'entiers
+Un **mot** est composé d'une **suite de lettres** mais aussi des **emplacements** où il est présent dans le texte.
+Commençons par modéliser les positions. Nous ne savons pas si le mot va être présent plusieurs fois dans le texte nous avons donc besoin ici aussi d'une liste chaînée qui grandi en fonction de la répétion du mot dans le texte. Nous avons contruit cette structure de listes d'emplacement sur le même principe que le dictionnaire, avec la deuxième partie de la case qui pointe vers la suivante et la première qui contient un emplacement (**couple d'entiers** ligne, colonne).
+Il nous reste à voir ce qu'est une suite de lettres. Le sujet nous oblige à jouer avec des entiers de différentes tailles pour mettre nos lettres dedans. Ceci est basé sur le fait que dans notre alphabet nous n'avons que 26 lettres et donc que nous pouvons les représenter sur **seulement 5 bits** alors que normalement un caractère simple (*char*) est **sur 8 bits**. Nous devons donc gérer une liste d'entiers de stockage à taille variable (*uint8/16/32/64_t*). Dans un **entier de stockage**, les lettres sont stockées sur les bits de poids faibles mais la premier lettre est dans le bits de poids forts de bits utilisés pour stocker. Le schéma du sujet reprend très bien cette description. Ne sachant pas la taille des mots, nous devons là encore faire une liste chaînée d'entiers de stockage.
 
-Choix de programmation
-----------------------
+Pour résumer, nous avons une liste chaînée (dictionnaire) de pointeurs vers des listes chaînées (vers des mot). Dans un mot nous avons choisi de mettre un pointeur vers la tête de la liste de ses lettres et vers la tête de la liste de ses positions mais aussi pour les deux listes vers la queue des listes (le dernier élément) pour faciliter l'ajout d'un élément.
+
+Notre structure de donnée est décrite dans le fichier *types.h*.
+
+### *Fonctions*
+
+Nos fonctions doivent **être économes en mémoire** car le texte peut être très gros. Notre structure de donnée de doit pas être passé en argument, et donc copier à chaque appel de fonctions. Nous avons donc choisi de donner le plus souvent possible des **pointeurs vers la structure de donnée**.
+Dès que nous avons commencé à coder, nous avons pu voir que certaines portions de code se trouvaient à plusieurs endroits, nous avons donc choisi d'en faire des fonctions auxiliaires, de même que certaines variables que nous avons rendu globale dans les fichiers où la variable était utilisée.
+De plus, nous avons essayer de nous **abstraire** le plus possible de **la taille des entiers de stockage**, ce qui rend notre application viable pour toutes les tailles de stockage possibles.
+Enfin nous avons choisi de **ne pas faire d'appel récursif** dans nos fonctions par soucis de **taille de pile**, celle-ci pouvant se remplir rapidement si nous sommes en présence d'un grand texte avec beaucoup de fois les mêmes mots. En effet, trop de listes imbriquées avec une fonction récursives pour chaque liste pourrait saturer la pile.
+Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement possible**, ainsi que les variables, qui sont d'ailleurs réduites au strict minimum.
+
+## Choix de programmation
 
 Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier maillon.c un constante. Appelé NB_LETTRES_MAILLON, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculé en divisant le nombre de bit
 
 Grâce à cette constante, il a suffit de changer le typedef maillon_t pour chager la taille du maillon et que cela soit appliqué dans tous le programme.
 
 
-Organisation logicielle
------------------------
+## Organisation logicielle
 
 TODO
 
-Exemples d'éxecution
---------------------
+## Comment utiliser notre application, la compiler
 
-TODO
-
-Comment utiliser notre application, la compiler
------------------------------------------------
-
-L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant necessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
+L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant né@cessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
 
 La compilation et l'exécution de notre projet se fait donc de la façon suivante :
 ```sh
@@ -52,9 +54,11 @@ Le programme permet de récupérer le texte entrés au clavier par un utilisateu
 
 Dans le cas ou la constante DEBUG est défini pendant la compilation, en plus de l'affichage classique, le dictionnaire sera affiché sous formes de liste de mots. Cela permet de visualiser facilement les structures de données utilisés pour stocker les mots dans le dictionnaires.
 
+## Exemples d'éxecution
 
-Limites / Extentions
---------------------
+TODO
+
+## Limites / Extentions
 
 Par défault, les maillons utilisés pour stocker les lettres de chaque mot du dictionnaire ont une taille de 32 bits. Il est cependant possible d'utiliser des maillons de 8, 16 ou 64 bits. Pour cela, il faut définir pendant la compilation la constant INT8, INT16 ou INT64.
 
