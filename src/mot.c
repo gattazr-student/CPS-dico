@@ -29,6 +29,7 @@ int compare_mots(char* aWord, mot_t* aMot){
 		/* Récupération des deux caractères à tester */
 		wChar1 = char_to_num(aWord[wI]);
 		if(wCourant == NULL){
+			wChar2 = 0;
 			break;
 		}
 		wChar2 = get_charnum(&(wCourant->pMaillon), wEmplacement);
@@ -49,7 +50,7 @@ int compare_mots(char* aWord, mot_t* aMot){
 
 	}while(wChar1 == wChar2); /* Boucle tant que les caractères récupéres sont égaux */
 
-	if(wCourant == NULL || wChar2 == '\0'){
+	if(wChar2 == '\0'){
 		if(wChar1 == '\0'){
 			/* aMot et aWord sont égaux (même longueur + meme contenu)*/
 			return 0;
