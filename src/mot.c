@@ -137,6 +137,7 @@ void update_mot(mot_t* aMot, int aLigne, int aColonne){
 	/* Allocation d'un nouvel element dans la liste de position */
 	(aMot->pQueueListe)->pNext = malloc(sizeof(lEmplacement_t));
 	aMot->pQueueListe = (aMot->pQueueListe)->pNext;
+	aMot->pQueueListe->pNext = NULL;
 
 	(aMot->pQueueListe)->pPos.pLigne = aLigne;
 	(aMot->pQueueListe)->pPos.pColonne = aColonne;
