@@ -29,7 +29,13 @@ Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement 
 
 ## Choix de programmation
 
-TODO
+Nous avons choisi de coder notre application en C car le C est un langage proche de la mémoire et de machine au sens matérielle. Nous avons hésité à faire des fonctions en assembleur pour gérer les entiers de stockage, mais nous ne voulions pas rentrer dans un niveau d'abstraction inférieur. Le C nous permet de manipuler les bits facilement.
+
+Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons libérer (free) la mémoire utilisée.
+
+Nous gérons tous les choix d'affichages et de gestion de fichiers dans notre main, car l'application doit s'arrêter proprement si elle rencontre un problème au cours de son exécution.
+
+Nous avons essayé de ne faire que des fonctions essentielles, nous les utilisons toutes. Les fonctions compiquées, que nous avons mis du temps à dévélopper, sont commentées en détails pour une meilleure (re)lecture.
 
 ## Organisation logicielle
 
@@ -37,7 +43,7 @@ TODO
 
 ## Comment utiliser notre application, la compiler
 
-L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant né@cessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
+L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant nécessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
 
 La compilation et l'exécution de notre projet se fait donc de la façon suivante :
 ```sh
@@ -57,37 +63,14 @@ TODO
 
 ## Limites / Extentions
 
-TODO
-marche avec toutes les tailles d'entiers de stockage, marche aussi avec des majuscules
+### *Améliorations faites*
 
+Nous avons essayé de faire des améliorations sur notre application.
+En effet, nous pouvons gérer des **lettres majuscules** simplement, mais elles seront stockées comme des lettres miniscules, car il s'agit du même mot, qu'il soit en début de phrase ou pas.
+Notre manière d'implémenter les fonctions et procédures de gestions de listes de stockage pour les lettres, nous permet de **faire varier rapidement la taille des entiers de stockage**, lors de la compilation.
+De plus nous avons essayé de **représenter** le mieux possible, dans le ternimal, les **listes chaînées** constituant notre structure de donnée. Ainsi nous avons ajouté un mode pour voir l'intérieur des listes, **détaillant chaque case**. Ceci passe par l'affichage des maillons, avec les cases vides, et des listes de positions. Cette amélioration est très utiles pour voir les différences entre les tailles d'entiers de stockage, car on distingue bien la taille de chaque maillon.
 
+### *Limites*
 
+Nous n'avons pas pu **gérer les accents** sur les lettres. Ceci aurait été pas bien compliquer mais non avant manquer de temps et d'une connaissance approfondie de la table ASCII étendue.
 
-Types définis :
----------------
-
-- couple entier : emplacements
-- liste position : lEmplacements
-- maillon : entier 8/16/32/64 bits (uint)
-- liste de maillon : lLettres
-- liste de maillon, liste emplacements : mot_t
-- liste mots : t_dictionnaire
-
-Fonctions :
------------
-
-Ce qui manque :
-
-
-Ce qui n'est pas encore testé :
-
-
-Ce qui marche :
-- print_dictionnaire                                [DONE]
-- compare_mots                                      [DONE]
-- make_dico                                         [DONE]
-- make_mot -> création + allocation                 [DONE]
-- free d'une liste (récursif ?)                     [DONE]
-- char_to_num + num_to_char                         [DONE]
-- get_charnum & set_charnum                         [DONE]
-- print_mot -> print_lLettres + print_lPositions    [DONE]
