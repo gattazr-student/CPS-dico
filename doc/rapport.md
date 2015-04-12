@@ -40,11 +40,12 @@ Contrairement à ce qui était proposé, nous n'avons pas définie une fonction 
 Nous aurions pu faire ce choix mais cela nous aurais forcé à exposer la fonction ou à effectuer des copies des listes d'emplacement. Nous avons donc décider de ne pas opter pour cette solution.
 
 ### Autres
+Nous avons choisi de coder notre application en C car le C est un langage proche de la mémoire et de machine au sens matérielle. Nous avons hésité à faire des fonctions en assembleur pour gérer les entiers de stockage, mais nous ne voulions pas rentrer dans un niveau d'abstraction inférieur. Le C nous permet de manipuler les bits facilement.
+
+
 Nous gérons tous les **choix d'affichages** et de **gestion de fichiers** dans notre *main*, car l'application doit s'arrêter proprement si elle rencontre un problème au cours de son exécution.
 
 Nous avons essayé de ne faire que des fonctions essentielles, nous les utilisons toutes. Les **fonctions** compiquées, que nous avons mis du temps à dévélopper, sont **commentées** en détails pour une meilleure (re)lecture.
-
-Nous avons choisi de coder notre application en C car le C est un langage proche de la mémoire et de machine au sens matérielle. Nous avons hésité à faire des fonctions en assembleur pour gérer les entiers de stockage, mais nous ne voulions pas rentrer dans un niveau d'abstraction inférieur. Le C nous permet de manipuler les bits facilement.
 
 Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons **libéré** (free) la mémoire utilisée.
 
@@ -62,12 +63,13 @@ L'application dico dépend de la librairie tokenize. Cette librairie est présen
 La compilation et l'exécution de notre projet se fait donc de la façon suivante :
 ```sh
 $ source ../setenv.sh
+$ cd src
 $ make
 $ ./dico [fichier]
 ```
 Le paramètre [fichier] est optionnel.
 
-Le programme permet de récupérer le texte entrés au clavier par un utilisateur et de faire le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci est valide, alors c'est ce fichier qui sera utilisé comme texte.
+Le programme permet de récupérer le texte entrés au clavier par un utilisateur et de produire et afficher le dictionnaire contenant tous les mots de ce texte. Si le nom d'un fichier est fourni et que celui ci existe, alors c'est le dictionnaire du texte dans ce fichier qui sera produit.
 
 Dans le cas ou la constante DEBUG est défini pendant la compilation, en plus de l'affichage classique, le dictionnaire sera affiché sous formes de liste de mots. Cela permet de visualiser facilement les structures de données utilisés pour stocker les mots dans le dictionnaires.
 
@@ -79,13 +81,13 @@ TODO
 
 ### *Améliorations faites*
 
-Nous avons essayé de faire des améliorations sur notre application.
-En effet, nous pouvons gérer des **lettres majuscules** simplement, mais elles seront stockées comme des lettres miniscules, car il s'agit du même mot, qu'il soit en début de phrase ou pas.
+Notre manière d'implémenter les fonctions et procédures de gestions de listes de stockage pour les lettres, nous permet de **faire varier rapidement la taille des entiers de stockage**, lors de la compilation. Pour cela, il faut définir pendant la compilation la constante *INT8*, *INT16* ou *INT64*. Si aucune de ces constantes n'est définie, ce sont des entiers de 32 bits qui seront utilisés.
 
-Notre manière d'implémenter les fonctions et procédures de gestions de listes de stockage pour les lettres, nous permet de **faire varier rapidement la taille des entiers de stockage**, lors de la compilation. Pour cela, il faut définir pendant la compilation la constante *INT8*, *INT16* ou *INT64*.
 
-De plus nous avons essayé de **représenter** le mieux possible, dans le ternimal, les **listes chaînées** constituant notre structure de donnée. Ainsi nous avons ajouté un mode pour voir l'intérieur des listes, **détaillant chaque case**. Ceci passe par l'affichage des maillons, avec les cases vides, et des listes de positions. Cette amélioration est très utiles pour voir les différences entre les tailles d'entiers de stockage, car on distingue bien la taille de chaque maillon. Pour voir cette affichage, il faut définir pendant la compilation la constante DEBUG.
+Nous pouvons gérer des **lettres majuscules** simplement, mais elles seront stockées comme des lettres miniscules, car il s'agit du même mot, qu'il soit en début de phrase ou pas.
+
+Nous avons essayé de **représenter** le mieux possible, dans le ternimal, les **listes chaînées** constituant notre structure de donnée. Ainsi nous avons ajouté un mode pour voir l'intérieur des listes, **détaillant chaque case**. Ceci passe par l'affichage des maillons, avec les cases vides, et des listes de positions. Cette amélioration est très utiles pour voir les différences entre les tailles d'entiers de stockage, car on distingue bien la taille de chaque maillon. Pour voir cette affichage, il faut définir pendant la compilation la constante DEBUG.
 
 ### *Limites*
 
-Nous n'avons pas pu **gérer les accents** sur les lettres. Ceci aurait été pas bien compliquer mais non avant manquer de temps et d'une connaissance approfondie de la table ASCII étendue.
+Nous n'avons pas géré les accents sur les lettres. Ceci aurait pourtant été relativement facile en rajoutant quelques règles dans la fonction char_to_num. Puisque ce n'est pas géré, dans le cas ou un mot contient un accent, le mot sera dans le dictionnaire considéré comme terminé à l'emplacement de l'accent dans le mot. Ce comportement se vérifie pour n'importe quel caractère qui n'est pas un lettre en majuscule ou minuscule.
