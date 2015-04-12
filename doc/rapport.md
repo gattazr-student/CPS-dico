@@ -1,9 +1,39 @@
 # Rapport
 
+Jules HABLOT
+Rémi GATTAZ
+
+
+<!-- Add custom css to markdown -->
+<style> .pagebreak { page-break-after: always; } </style>
+
+## Table des matières
+<!-- MarkdownTOC -->
+
+- Présentation du sujet
+- Choix de conception
+	- *Structure des données*
+	- *Fonctions*
+- Choix de programmation
+	- *Taille des maillons*
+	- *Compare*
+	- *Autres*
+- Organisation logicielle
+- Organisation logistique
+- Comment compiler et utiliser notre application
+- Exemples d'éxecution
+- Limites / Extentions
+	- *Améliorations faites*
+	- *Limites*
+
+<!-- /MarkdownTOC -->
+
+<div class="pagebreak"></div>
 ## Présentation du sujet
 
 Nous souhaitons faire un lexique de tous les mots présents dans un texte, et pour les retrouver facilement nous ajoutons à chaque mot le numéro de la ligne où il est présent et après combien de caractères le mot commence sur cette ligne. Etant donné que nous ne connaissons pas la taille du texte avant de le lire en entier alors nous devons créer une structure dynamique qui aura exactement la taille nécessaire permettant de contenir tout le lexique.
 
+<div class="pagebreak"></div>
 ## Choix de conception
 
 ### *Structure des données*
@@ -19,6 +49,7 @@ Pour résumer, nous avons une liste chaînée (dictionnaire) de pointeurs vers d
 
 Notre structure de donnée est décrite dans le fichier *types.h*.
 
+<div class="pagebreak"></div>
 ### *Fonctions*
 
 Nos fonctions doivent **être économes en mémoire** car le texte peut être très gros. Notre structure de donnée ne doit pas être passé en argument, et donc copier à chaque appel de fonctions. Nous avons donc choisi de donner le plus souvent possible des **pointeurs vers la structure de donnée**.
@@ -27,6 +58,7 @@ De plus, nous avons essayé de nous **abstraire** le plus possible de **la taill
 Enfin nous avons choisi de **ne pas faire d'appel récursif** dans nos fonctions par soucis de **taille de pile**, celle-ci pouvant se remplir rapidement si nous sommes en présence d'un grand texte avec beaucoup de fois les mêmes mots. En effet, trop de listes imbriquées avec une fonction récursive pour chaque liste pourrait saturer la pile.
 Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement possible**, ainsi que les variables, qui sont d'ailleurs réduites au strict minimum.
 
+<div class="pagebreak"></div>
 ## Choix de programmation
 
 ### *Taille des maillons*
@@ -48,6 +80,7 @@ Nous avons essayé de ne faire que des fonctions essentielles, nous les utilison
 
 Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons **libéré** (free) la mémoire utilisée.
 
+<div class="pagebreak"></div>
 ## Organisation logicielle
 Notre application est décomposée en 4 fichiers :
 - maillon.c : fonctions pour abstraction du maillon
@@ -63,6 +96,7 @@ C'est uniquement notre programme principale qui dépent de la librarie *tokenize
 
 Etant donné que nous étions tous les deux familliers avec l'utilisation de git, nous avons décidé pour ce projet de mettre en place un dépot git. Ceci nous as permis de partager et mettre en commun nos sources très facilement.
 
+<div class="pagebreak"></div>
 ## Comment compiler et utiliser notre application
 
 L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier *lib/* et le **makefile** a été écrit afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir éxecuter le programme, il est cependant nécessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier **setenv.sh** à la racine permet d'effectuer cette opération pour les *Linux* **64 bits** et *Mac OS X*. Pour les **32 bits**, il faudra modifier le ficher sourcé pour mettre la bonne librairie.
@@ -80,6 +114,7 @@ Le programme permet de récupérer le texte entré au clavier par un utilisateur
 
 Dans le cas où la constante *DEBUG* est défini pendant la compilation, en plus de l'affichage classique, le dictionnaire sera affiché sous forme de liste de mots. Cela permet de **visualiser** facilement les **structures de données** utilisées pour stocker les mots dans le dictionnaires.
 
+<div class="pagebreak"></div>
 ## Exemples d'éxecution
 
 Avec des maillons de *32 bits* sans avoir défini la constante *DEBUG* :
@@ -200,6 +235,8 @@ Maillons :
 |
 ```
 
+
+<div class="pagebreak"></div>
 ## Limites / Extentions
 
 ### *Améliorations faites*
