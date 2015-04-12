@@ -30,23 +30,34 @@ Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement 
 ## Choix de programmation
 
 ### Taille des maillons
-Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier maillon.c un constante. Appelé NB_LETTRES_MAILLON, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculé en divisant le nombre de bit
+Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier *maillon.c* une **constante**. Appelée *NB_LETTRES_MAILLON*, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculée en divisant le nombre de bit par la taille d'une lettre (5 bits).
+Grâce à cette constante, il a suffit de changer le typedef *maillon_t* pour changer la taille du maillon et que cela soit appliqué dans tout le programme.
 
-Grâce à cette constante, il a suffit de changer le typedef maillon_t pour chager la taille du maillon et que cela soit appliqué dans tous le programme.
 
 ### Compare
 Contrairement à ce qui était proposé, nous n'avons pas définie une fonction compare_mots qui prend en paramètres deux mots. A la place, nous avons défini un fonction qui prend en paramètre un mot et une chaine de caractère.
 
 Nous aurions pu faire ce choix mais cela nous aurais forcé à exposer la fonction ou à effectuer des copies des listes d'emplacement. Nous avons donc décider de ne pas opter pour cette solution.
 
+### Autres
+Nous gérons tous les **choix d'affichages** et de **gestion de fichiers** dans notre *main*, car l'application doit s'arrêter proprement si elle rencontre un problème au cours de son exécution.
+
+Nous avons essayé de ne faire que des fonctions essentielles, nous les utilisons toutes. Les **fonctions** compiquées, que nous avons mis du temps à dévélopper, sont **commentées** en détails pour une meilleure (re)lecture.
+
+Nous avons choisi de coder notre application en C car le C est un langage proche de la mémoire et de machine au sens matérielle. Nous avons hésité à faire des fonctions en assembleur pour gérer les entiers de stockage, mais nous ne voulions pas rentrer dans un niveau d'abstraction inférieur. Le C nous permet de manipuler les bits facilement.
+
+Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons **libéré** (free) la mémoire utilisée.
+
+
+
 
 ## Organisation logicielle
 
 TODO
 
-## Comment utiliser notre application, la compiler
+## Comment compilet et utiliser notre application
 
-L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant né@cessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
+L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant nécessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
 
 La compilation et l'exécution de notre projet se fait donc de la façon suivante :
 ```sh
@@ -66,28 +77,15 @@ TODO
 
 ## Limites / Extentions
 
-Par défault, les maillons utilisés pour stocker les lettres de chaque mot du dictionnaire ont une taille de 32 bits. Il est cependant possible d'utiliser des maillons de 8, 16 ou 64 bits. Pour cela, il faut définir pendant la compilation la constant INT8, INT16 ou INT64.
+### *Améliorations faites*
 
+Nous avons essayé de faire des améliorations sur notre application.
+En effet, nous pouvons gérer des **lettres majuscules** simplement, mais elles seront stockées comme des lettres miniscules, car il s'agit du même mot, qu'il soit en début de phrase ou pas.
 
-Types définis :
----------------
+Notre manière d'implémenter les fonctions et procédures de gestions de listes de stockage pour les lettres, nous permet de **faire varier rapidement la taille des entiers de stockage**, lors de la compilation. Pour cela, il faut définir pendant la compilation la constante *INT8*, *INT16* ou *INT64*.
 
-- couple entier : emplacements
-- liste position : lEmplacements
-- maillon : entier 8/16/32/64 bits (uint)
-- liste de maillon : lLettres
-- liste de maillon, liste emplacements : mot_t
-- liste mots : t_dictionnaire
+De plus nous avons essayé de **représenter** le mieux possible, dans le ternimal, les **listes chaînées** constituant notre structure de donnée. Ainsi nous avons ajouté un mode pour voir l'intérieur des listes, **détaillant chaque case**. Ceci passe par l'affichage des maillons, avec les cases vides, et des listes de positions. Cette amélioration est très utiles pour voir les différences entre les tailles d'entiers de stockage, car on distingue bien la taille de chaque maillon. Pour voir cette affichage, il faut définir pendant la compilation la constante DEBUG.
 
-Fonctions :
------------
+### *Limites*
 
-- print_dictionnaire                                [DONE]
-- compare_mots                                      [DONE]
-- make_dico                                         [DONE]
-- make_mot -> création + allocation                 [DONE]
-- free d'une liste (récursif)                       [DONE]
-- char_to_num + num_to_char                         [DONE]
-- get_charnum & set_charnum                         [DONE]
-- print_mot -> print_lLettres + print_lPositions    [DONE]
-- afficher_maillons [DONE]
+Nous n'avons pas pu **gérer les accents** sur les lettres. Ceci aurait été pas bien compliquer mais non avant manquer de temps et d'une connaissance approfondie de la table ASCII étendue.
