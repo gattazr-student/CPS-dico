@@ -49,10 +49,20 @@ Nous avons essayé de ne faire que des fonctions essentielles, nous les utilison
 Nous avons, dans notre gestion de structure de donnée, pensé à nettoyer la mémoire à la fin de l'exécution de notre programme. Pour cela nous avons **libéré** (free) la mémoire utilisée.
 
 ## Organisation logicielle
+Notre application est décomposé en 4 fichiers :
+- maillon.c : fonctions pour abstraction du maillon
+- mot.c : fonctions pour abstraction de la structure **mot**
+- dictionnaire.c : fonctions abstraction du dictionnaire
+- main.c : programme principal
 
-TODO
+Dans cette liste, chaque fichier dépend du fichier du dessus. C'est maillon.c qui est donc le niveau le plus bas de notre abstraction.
 
-## Comment compilet et utiliser notre application
+C'est uniquement notre programme principale qui dépent de la librarie tokenize.
+
+## Organisation logistique
+Etant donnée que nous étions tous les deux familliers avec l'utilisation de git, nous avons décidé pour ce projet de mettre en place un dépot git. Ceci nous as permis de partager et mettre en commun nos sources très facilement.
+
+## Comment compiler et utiliser notre application
 
 L'application dico dépend de la librairie tokenize. Cette librairie est présente dans le dossier lib et le makefile a été écris afin que la compilation fonctionne sur les plateformes Linux et Mac OS X. Pour pouvoir executer le programme, il est cependant nécessaire d'ajouter le chemin vers le dossier lib correspondant dans la variable d'environnement LD_LIBRARY_PATH pour linux et DYLD_LIBRARY_PATH pour OSX. Sourcer le fichier setenv.sh à la racine permet d'effectuer cette opération pour les linux 64 bits et Mac OS X
 
@@ -71,7 +81,126 @@ Dans le cas ou la constante DEBUG est défini pendant la compilation, en plus de
 
 ## Exemples d'éxecution
 
-TODO
+Avec des maillons de 32 bits sans avoir défini la constante DEBUG :
+```sh
+gattazr@remiBookPro13 src $ ./dico ../Examples/hugo.txt
+
+
+Dictionnaire :
+	aller (2,6)
+	branches (2,42)
+	ce (2,20)
+	dit (2,29)
+	ecouter (2,12)
+	faner (1,24)
+	je (1,1)
+	laisserai (1,7)
+	les (1,30) (2,38)
+	ne (1,4)
+	on (2,26)
+	pas (1,17)
+	pervenches (1,34)
+	qu (2,23)
+	sans (2,1)
+	se (1,21)
+	sous (2,33)
+```
+
+Avec des maillons de 16 bits en ayant défini la constante DEBUG :
+```sh
+gattazr@remiBookPro13 src $ ./dico ../Examples/hugo.txt
+
+
+Dictionnaire :
+	aller (2,6)
+	branches (2,42)
+	ce (2,20)
+	dit (2,29)
+	ecouter (2,12)
+	faner (1,24)
+	je (1,1)
+	laisserai (1,7)
+	les (1,30) (2,38)
+	ne (1,4)
+	on (2,26)
+	pas (1,17)
+	pervenches (1,34)
+	qu (2,23)
+	sans (2,1)
+	se (1,21)
+	sous (2,33)
+
+
+Maillons :
+|	[ {all} -> {er }
+|	  |
+|	  |--> {2, 6}	]
+|
+|	[ {bra} -> {nch} -> {es }
+|	  |
+|	  |--> {2, 42}	]
+|
+|	[ {ce }
+|	  |
+|	  |--> {2, 20}	]
+|
+|	[ {dit}
+|	  |
+|	  |--> {2, 29}	]
+|
+|	[ {eco} -> {ute} -> {r  }
+|	  |
+|	  |--> {2, 12}	]
+|
+|	[ {fan} -> {er }
+|	  |
+|	  |--> {1, 24}	]
+|
+|	[ {je }
+|	  |
+|	  |--> {1, 1}	]
+|
+|	[ {lai} -> {sse} -> {rai}
+|	  |
+|	  |--> {1, 7}	]
+|
+|	[ {les}
+|	  |
+|	  |--> {1, 30} ->  {2, 38}	]
+|
+|	[ {ne }
+|	  |
+|	  |--> {1, 4}	]
+|
+|	[ {on }
+|	  |
+|	  |--> {2, 26}	]
+|
+|	[ {pas}
+|	  |
+|	  |--> {1, 17}	]
+|
+|	[ {per} -> {ven} -> {che} -> {s  }
+|	  |
+|	  |--> {1, 34}	]
+|
+|	[ {qu }
+|	  |
+|	  |--> {2, 23}	]
+|
+|	[ {san} -> {s  }
+|	  |
+|	  |--> {2, 1}	]
+|
+|	[ {se }
+|	  |
+|	  |--> {1, 21}	]
+|
+|	[ {sou} -> {s  }
+|	  |
+|	  |--> {2, 33}	]
+|
+```
 
 ## Limites / Extentions
 
