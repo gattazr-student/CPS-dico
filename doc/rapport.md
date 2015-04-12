@@ -29,9 +29,15 @@ Finalement, nous avons essayer de **nommer nos fonctions le plus judicieusement 
 
 ## Choix de programmation
 
+### Taille des maillons
 Afin de pouvoir changer facilement la taille des maillons plus tard, nous avons décidé de définir dans le fichier maillon.c un constante. Appelé NB_LETTRES_MAILLON, cette constante contient le nombre de lettres qu'il est possible de mettre dans un maillon. Cette constante est calculé en divisant le nombre de bit
 
 Grâce à cette constante, il a suffit de changer le typedef maillon_t pour chager la taille du maillon et que cela soit appliqué dans tous le programme.
+
+### Compare
+Contrairement à ce qui était proposé, nous n'avons pas définie une fonction compare_mots qui prend en paramètres deux mots. A la place, nous avons défini un fonction qui prend en paramètre un mot et une chaine de caractère.
+
+Nous aurions pu faire ce choix mais cela nous aurais forcé à exposer la fonction ou à effectuer des copies des listes d'emplacement. Nous avons donc décider de ne pas opter pour cette solution.
 
 
 ## Organisation logicielle
